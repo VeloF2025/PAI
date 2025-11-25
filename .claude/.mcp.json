@@ -1,5 +1,33 @@
 {
   "mcpServers": {
+    "context7": {
+      "command": "bunx",
+      "args": ["-y", "@upstash/context7-mcp@latest"],
+      "description": "Real-time documentation for 33K+ libraries. Use 'use context7' in prompts to get version-specific docs and prevent API hallucinations."
+    },
+    "sequential-thinking": {
+      "command": "bunx",
+      "args": ["-y", "@modelcontextprotocol/server-sequentialthinking"],
+      "description": "Structured reasoning for complex problems. Step-by-step decomposition with branching and revision."
+    },
+    "memory": {
+      "command": "bunx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"],
+      "description": "Persistent knowledge graph across sessions. Remembers project patterns and past decisions (39% performance improvement)."
+    },
+    "github": {
+      "command": "bunx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+      },
+      "description": "GitHub repository automation - PR creation, issue management, code search"
+    },
+    "veritas": {
+      "type": "http",
+      "url": "http://localhost:8061",
+      "description": "Veritas truth-enforcing coding assistant with DGTS + NLNH protocols. Start with: docker compose -f docker-compose.veritas.yml up -d"
+    },
     "httpx": {
       "type": "http",
       "description": "Use for getting information on web servers or site stack information, like what tech stack a given website is running, and other similar use cases.",
@@ -77,6 +105,17 @@
         "--extension"
       ],
       "description": "Browser automation and testing using Playwright for visual debugging and web interaction"
+    },
+    "claude-prompts": {
+      "command": "node.exe",
+      "args": [
+        "C:\\Users\\HeinvanVuuren\\claude-prompts-mcp\\server\\dist\\index.js"
+      ],
+      "env": {
+        "MCP_SERVER_ROOT": "C:\\Users\\HeinvanVuuren\\claude-prompts-mcp\\server",
+        "MCP_PROMPTS_CONFIG_PATH": "C:\\Users\\HeinvanVuuren\\claude-prompts-mcp\\server\\prompts\\promptsConfig.json"
+      },
+      "description": "PAI prompt enhancement system with 8 specialized tools for optimizing prompts for research, coding, agents, and multi-agent orchestration. Includes CAGEERF, ReACT, and other thinking frameworks."
     }
   }
 }

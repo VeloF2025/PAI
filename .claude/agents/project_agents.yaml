@@ -1,0 +1,179 @@
+project:
+  name: 'Personal_AI_Infrastructure'
+  complexity: 8.0
+  languages:
+    typescript: 26.0
+    python: 9.1
+    javascript: 1.0
+    go: 63.8
+  frameworks:
+  - express
+  - next.js
+  - react
+  - svelte
+  - vue
+  build_tools: []
+  testing_frameworks:
+  - xunit
+  databases: []
+  architecture_pattern: monolith
+  research_enabled: false
+
+# MCP Auto-Invocation Rules for All Agents
+mcp_integration:
+  context7:
+    auto_invoke_when:
+      - writing code with external libraries
+      - checking API patterns
+      - framework-specific implementation
+    usage: "use context7 for [library] [version] documentation"
+
+  memory:
+    auto_invoke_when:
+      - session start (recall project patterns)
+      - session end (store learnings)
+      - referencing past decisions
+    usage: automatic entity storage/retrieval
+
+  sequential_thinking:
+    auto_invoke_when:
+      - complex architectural decisions
+      - multi-step debugging
+      - trade-off analysis
+    usage: step-by-step reasoning chains
+
+  playwright:
+    auto_invoke_when:
+      - E2E testing required
+      - UI validation
+      - browser automation
+    usage: test execution and screenshots
+
+  github:
+    auto_invoke_when:
+      - PR operations
+      - issue management
+      - code search
+    usage: repository automation
+agents:
+- name: typescript-strict-enforcer
+  type: code-quality-reviewer
+  description: Enforces TypeScript strict mode and type safety
+  mcp_servers:
+    - context7  # TypeScript documentation
+    - memory    # Past type patterns
+  validation:
+    dgts:
+      threshold: 0.35
+      custom_patterns:
+      - id: TS_ANY_TYPE
+        severity: CRITICAL
+        regex: \bany\b(?!\s*\()
+        description: TypeScript 'any' type usage (strict mode violation)
+        category: type_safety
+      - id: TS_IMPLICIT_ANY
+        severity: MAJOR
+        regex: :\s*\[\s*\](?!\s*=)
+        description: Implicit any in array type
+        category: type_safety
+    nlnh:
+      confidence_threshold: 0.85
+    quality_gates:
+    - TYPE_CHECK_REQUIRED
+    - NO_ANY_TYPES
+- name: nextjs-optimization-enforcer
+  type: performance-optimizer
+  description: Enforces Next.js performance best practices
+  mcp_servers:
+    - context7  # Next.js latest docs
+    - memory    # Past optimization patterns
+  validation:
+    dgts:
+      threshold: 0.3
+      custom_patterns:
+      - id: NEXTJS_IMG_TAG
+        severity: MAJOR
+        regex: <img\s+
+        description: Using <img> instead of Next.js Image component
+        category: performance
+      - id: NEXTJS_CLIENT_COMPONENT
+        severity: MINOR
+        regex: '"use client"(?!.*?useState|.*?useEffect)'
+        description: Unnecessary 'use client' directive
+        category: performance
+    nlnh:
+      confidence_threshold: 0.8
+    quality_gates:
+    - SSR_VALIDATION
+    - IMAGE_OPTIMIZATION
+- name: react-best-practices-enforcer
+  type: code-implementer
+  description: Enforces React best practices and hooks rules
+  mcp_servers:
+    - context7  # React 19 docs
+    - memory    # Component patterns
+  validation:
+    dgts:
+      threshold: 0.3
+      custom_patterns:
+      - id: REACT_INLINE_FUNCTION
+        severity: MINOR
+        regex: onClick=\{.*?=>
+        description: Inline function in JSX (performance concern)
+        category: performance
+      - id: REACT_MISSING_KEY
+        severity: MAJOR
+        regex: \.map\(.*?\)\s*\n.*?<.*?>(?!.*?key=)
+        description: Missing key prop in mapped elements
+        category: react_rules
+    nlnh:
+      confidence_threshold: 0.8
+    quality_gates:
+    - HOOKS_RULES
+    - COMPONENT_STRUCTURE
+- name: testing-coverage-enforcer
+  type: test-coverage-validator
+  description: Enforces test coverage standards
+  mcp_servers:
+    - playwright  # E2E test execution
+    - memory      # Test patterns
+  validation:
+    dgts:
+      threshold: 0.4
+      custom_patterns:
+      - id: TEST_NO_ASSERTIONS
+        severity: CRITICAL
+        regex: (test|it)\(['\"].*?['\"].*?\).*?\{(?!.*?(expect|assert))
+        description: Test without assertions
+        category: test_quality
+      - id: TEST_ONLY_TRUE
+        severity: CRITICAL
+        regex: (expect|assert).*?\.toBe\(true\)
+        description: Test always passes (assert true)
+        category: gaming
+    nlnh:
+      confidence_threshold: 0.9
+    quality_gates:
+    - COVERAGE_95_PERCENT
+    - NO_FAKE_TESTS
+- name: complexity-manager
+  type: code-refactoring-optimizer
+  description: Manages complexity for monolith architecture
+  mcp_servers:
+    - sequential-thinking  # Complex refactoring decisions
+    - memory               # Architecture patterns
+  validation:
+    dgts:
+      threshold: 0.4
+      custom_patterns:
+      - id: COMPLEXITY_LARGE_FUNCTION
+        severity: MAJOR
+        regex: (def|function|const.*?=.*?{)[\s\S]{500,}
+        description: Function exceeds complexity limit (>500 chars)
+        category: complexity
+    nlnh:
+      confidence_threshold: 0.9
+    quality_gates:
+    - ARCHITECTURE_VALIDATION
+    - DOCUMENTATION_REQUIRED
+    - REFACTORING_CHECK

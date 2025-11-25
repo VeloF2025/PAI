@@ -1,6 +1,25 @@
 ---
 name: research
-description: Multi-source comprehensive research using perplexity-researcher, claude-researcher, and gemini-researcher agents. Three modes - Quick (3 agents), Standard (9 agents), Extensive (24 agents with be-creative skill). USE WHEN user says 'do research', 'quick research', 'extensive research', 'find information about', 'investigate', 'analyze trends', 'current events', or any research-related request.
+description: |
+  Multi-source comprehensive research using perplexity-researcher, claude-researcher, and gemini-researcher agents.
+  Three modes - Quick (3 agents), Standard (9 agents), Extensive (24 agents with be-creative skill).
+
+  USE WHEN user says 'do research', 'quick research', 'extensive research', 'find information about',
+  'investigate', 'analyze trends', 'current events', or any research-related request.
+
+  === MCP AUTO-INVOCATION ===
+  **memory**: ALWAYS use at start (recall past research) and end (store findings)
+  **context7**: Use when researching technical libraries/frameworks
+  **sequential-thinking**: Use for complex multi-domain research synthesis
+
+triggers:
+  - do research
+  - quick research
+  - extensive research
+  - find information about
+  - investigate
+  - analyze trends
+  - current events
 ---
 
 # Research Skill
@@ -160,3 +179,38 @@ ${PAI_DIR}/history/research/2025-10-26_agi-frameworks/
 ## Full Workflow Reference
 
 For complete step-by-step instructions: `read ${PAI_DIR}/.claude/commands/conduct-research.md`
+
+---
+
+## 🔧 MCP Integration (Auto-Invoked)
+
+### memory MCP - Cross-Session Knowledge
+**Auto-invoked at:**
+1. **Session Start**: Recall past research on this topic or related subjects
+2. **After Synthesis**: Store key findings, patterns, and sources for future reference
+
+**What gets stored:**
+- Research topics and key findings
+- Effective query decomposition patterns
+- Source reliability assessments
+- Cross-topic connections discovered
+
+### context7 MCP - Technical Documentation
+**Auto-invoked when:**
+- Research involves libraries/frameworks (React, Next.js, etc.)
+- User asks about API patterns or best practices
+- Technical documentation lookup needed
+
+**Usage:** "use context7 for [library] [version] documentation"
+
+### sequential-thinking MCP - Complex Synthesis
+**Auto-invoked when:**
+- Extensive research mode (24 agents)
+- Multi-domain analysis needed
+- Conflicting sources require resolution
+- Complex trade-off analysis
+
+**Provides:**
+- Step-by-step reasoning chains
+- Branching analysis paths
+- Confidence-weighted conclusions

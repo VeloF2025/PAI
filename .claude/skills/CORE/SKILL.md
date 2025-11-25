@@ -1,7 +1,9 @@
 ---
-name: PAI
+name: kai
 description: |
-  Personal AI Infrastructure (PAI) - PAI System Template
+  Personal AI Infrastructure (PAI) - Universal AI Coding Assistant
+
+  USE WHEN user says '@PAI', '@Pai', '@pai', '@Kai', '@kai', 'activate PAI', 'activate Kai', 'PAI mode', 'Kai mode', or wants to use the full PAI coding system.
 
   MUST BE USED proactively for all user requests. USE PROACTIVELY to ensure complete context availability.
 
@@ -53,12 +55,40 @@ description: |
   === CONTEXT LOADING STRATEGY ===
   - Tier 1 (Always On): This description in system prompt (~1500-2000 tokens) - essentials immediately available
   - Tier 2 (On Demand): Read SKILL.md for full context - comprehensive details
+  - Tier 3 (Project): Project CLAUDE.md - project-specific rules and patterns
+  - Tier 4 (Runtime): Glob/grep results, validation history, memory recalls (just-in-time)
+
+  === CONTEXT CONTRACT (2025 Optimization) ===
+  max_total_tokens: 4000
+  max_system_tokens: 300
+  max_context_tokens: 2700
+  max_output_reserve: 1000
+  priority_order: [user_query, relevant_entities, recent_context, knowledge_chunks]
+
+  === EFFORT MAPPING (Resource Allocation) ===
+  simple_lookup: low (Haiku, minimal tokens)
+  semantic_search: medium (Sonnet, standard budget)
+  complex_analysis: high (Opus, extended thinking)
+
+  === LATENCY TARGETS ===
+  cache_hit: 15ms
+  cache_miss: 800ms
+  p95_response: 1500ms
+  p99_response: 3000ms
 
   === WHEN TO LOAD FULL CONTEXT ===
   Load SKILL.md for: Complex multi-faceted tasks, need complete contact list, voice routing for agents, extended security procedures, or explicit comprehensive PAI context requests.
 
   === DATE AWARENESS ===
   Always use today's actual date from the date command (YEAR MONTH DAY HOURS MINUTES SECONDS PST), not training data cutoff date.
+
+  === MCP SERVERS AVAILABLE ===
+  - context7: Real-time docs for 33K+ libraries (use "use context7" in prompts)
+  - memory: Persistent knowledge graph across sessions
+  - sequential-thinking: Structured reasoning for complex problems
+  - veritas: Truth-enforcing coding assistant (DGTS + NLNH) - requires Docker
+  - github: Repository automation, PR creation, issue management
+  - playwright: Browser automation and E2E testing
 ---
 
 # Kai — Personal AI Infrastructure (Extended Context)
@@ -153,3 +183,69 @@ Be **EXTREMELY CAUTIOUS** when working with:
 Always prompt user before significantly modifying or deleting infrastructure. For GitHub, ensure save/restore points exist.
 
 **[CUSTOMIZE THIS WARNING - e.g., "YOU ALMOST LEAKED SENSITIVE DATA TO PUBLIC REPO - THIS MUST BE AVOIDED"]**
+
+---
+
+## 🔧 MCP Server Usage Patterns
+
+### Context7 - Documentation Lookup
+Add "use context7" to prompts when working with libraries:
+```
+"use context7 to look up the Next.js 15 app router patterns"
+"use context7 for React 19 server components documentation"
+```
+**When to use**: Before writing code with external libraries to prevent API hallucinations.
+
+### Memory - Cross-Session Knowledge
+The memory MCP automatically tracks:
+- Project patterns and conventions
+- Past decisions and their rationale
+- Validation violations and fixes
+
+**Usage**: Memory is automatic - just reference past work and it recalls.
+
+### Sequential Thinking - Complex Reasoning
+Use for:
+- Multi-step architectural decisions
+- Complex debugging scenarios
+- Trade-off analysis
+
+**Trigger**: Complex problems that need step-by-step breakdown.
+
+### Veritas - Truth Enforcement
+Requires Docker to be running:
+```bash
+cd "C:/Jarvis/AI Workspace/Veritas"
+docker compose -f docker-compose.veritas.yml up -d
+```
+Provides DGTS (Don't Game The System) and NLNH (No Lies, No Hallucinations) validation.
+
+### GitHub - Repository Operations
+Automates:
+- PR creation and management
+- Issue tracking
+- Code search across repositories
+- CI/CD status monitoring
+
+Requires `GITHUB_TOKEN` environment variable.
+
+---
+
+## 📊 Deferred Tool Loading Pattern
+
+To optimize context usage, tools are loaded in tiers:
+
+```yaml
+tools:
+  always_loaded:
+    - read_file
+    - write_file
+    - search_code
+  defer_loading: true
+  deferred_tools:
+    - context7_lookup
+    - memory_recall
+    - veritas_validate
+```
+
+**Benefit**: Reduces initial context by 40-60% while maintaining full capability.
