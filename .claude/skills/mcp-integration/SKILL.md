@@ -188,3 +188,64 @@ sequential-thinking: ✓ Connected
 github: ✓ Connected
 playwright: ✓ Connected
 ```
+
+---
+
+## Veritas Infrastructure Integration
+
+When Veritas Docker is running, PAI automatically gains access to enterprise-grade memory:
+
+### Veritas Memory Architecture
+
+| Service | Port | Purpose | TTL |
+|---------|------|---------|-----|
+| **PostgreSQL + pgvector** | 5432 | Execution history with embeddings | Permanent |
+| **Redis DB0** | 6379 | Embedding cache (50-70% hit rate) | 24 hours |
+| **Redis DB1** | 6379 | Similarity search cache (30-40% hit rate) | 1 hour |
+
+### How PAI Uses Veritas Memory
+
+1. **Execution History**: All agent executions stored with embeddings for learning
+2. **Similarity Search**: Find past similar tasks for context enhancement
+3. **Embedding Cache**: Avoid redundant embedding API calls (60% cost reduction)
+4. **Prometheus Metrics**: Track cache hits, execution success rates
+
+### Starting Veritas for Memory Enhancement
+
+```bash
+# Start core services (includes Redis + PostgreSQL)
+cd "C:/Jarvis/AI Workspace/Veritas"
+docker compose -f docker-compose.veritas.yml up -d
+
+# Verify memory services
+curl http://localhost:8282/api/memory/stats
+```
+
+### When to Use Veritas vs MCP Memory
+
+| Feature | MCP Memory | Veritas Memory |
+|---------|------------|----------------|
+| **Storage** | Local JSON file | PostgreSQL + pgvector |
+| **Similarity** | Basic | Vector cosine similarity |
+| **Caching** | None | Redis multi-tier |
+| **Metrics** | None | Prometheus |
+| **Requires** | Always available | Docker running |
+
+**Recommendation**: Use MCP memory for lightweight persistence, Veritas for production workloads.
+
+### Veritas Memory API Endpoints
+
+When Docker is running:
+```bash
+# Store execution
+POST http://localhost:8282/api/memory/executions
+
+# Find similar past executions
+GET http://localhost:8282/api/memory/similar?query=task+description
+
+# Get execution metrics
+GET http://localhost:8282/api/memory/metrics?skill=research
+
+# Cache stats
+GET http://localhost:8282/api/memory/cache/stats
+```
