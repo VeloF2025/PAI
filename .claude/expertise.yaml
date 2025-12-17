@@ -1,0 +1,147 @@
+# Project Expertise - Auto-updated by expert-self-improve hook
+# Last updated: 2025-12-16T10:19:02.880Z
+# Version: 2
+
+expertise:
+  project: Personal_AI_Infrastructure
+  domain: ai-infrastructure
+  version: 2
+  last_updated: 2025-12-16T10:19:02.880Z
+  stack:
+    language: typescript
+    runtime: bun
+    framework: claude-code-skills
+    secondary_language: python
+  key_locations:
+    project_claude: .claude/
+    skills: .claude/skills/
+    boss: .claude/skills/boss-orchestrator/
+    workers: .claude/skills/boss-orchestrator/workers/
+    docs: docs/
+    lib: lib/
+    scripts: scripts/
+    tests: tests/
+  relationships:
+    - from: skills
+      to: hooks
+      type: skills trigger hooks on invocation
+    - from: hooks
+      to: memories
+      type: hooks update memories at session end
+    - from: commands
+      to: skills
+      type: slash commands can invoke skills
+    - from: boss
+      to: workers
+      type: orchestrator dispatches to workers
+    - from: learn-and-update
+      to: knowledge
+      type: extracts patterns to knowledge files
+  patterns:
+    - name: Skill file structure
+      when: creating new skills
+      example: |
+        ---
+        name: skill-name
+        description: |
+          Trigger phrase and purpose.
+          USE WHEN user says 'trigger phrase'
+        ---
+
+        # Skill Title
+
+        ## On Invocation
+        [What to do when triggered]
+
+        ## Usage
+        [How to use the skill]
+      notes: YAML frontmatter required for skill registration
+    - name: Hook file structure
+      when: creating new hooks
+      example: |
+        #!/usr/bin/env bun
+        /**
+         * Hook Name
+         * Hook Type: SessionStart | Stop | UserPromptSubmit | etc.
+         */
+        import { readFileSync, writeFileSync } from 'fs';
+
+        async function main() {
+          // Read stdin for hook context
+          const input = await Bun.stdin.text();
+          const context = JSON.parse(input);
+
+          // Do work...
+
+          // Output to stderr (for system-reminder injection)
+          console.error('[hook-name] Message');
+        }
+
+        main();
+      notes: Use bun, read stdin JSON, output to stderr
+    - name: Bootstrap workaround
+      when: "hooks not running due to Claude Code bug #11544"
+      example: |
+        bun "~/.claude/hooks/pai-bootstrap-all.ts" start
+        bun "~/.claude/hooks/pai-bootstrap-all.ts" context
+        bun "~/.claude/hooks/pai-bootstrap-all.ts" end
+      notes: Manual hook execution until bug fixed
+    - name: Memory update pattern
+      when: updating session memories
+      example: |
+        # In current.md
+        ## Active Tasks
+        - [x] Task completed
+        - [ ] Task pending
+
+        ## Today's Decisions
+        1. Decision made and why
+      notes: Keep current.md focused, archive old items
+    - name: Progressive disclosure
+      when: loading context efficiently
+      example: |
+        # In CLAUDE.md - keep triggers and pointers
+        **Protocol**: Read `~/.claude/protocols/dgts-validation.md` when needed
+
+        # NOT the full protocol text
+      notes: Load on-demand, not upfront. ~10k token savings
+  anti_patterns:
+    - name: Hardcoded paths
+      why_bad: Breaks on different systems
+      what_to_do: Use process.env.HOME or process.env.USERPROFILE
+    - name: Blocking stdin read
+      why_bad: Hooks hang if no input
+      what_to_do: Use timeout or check if stdin available
+    - name: Large system prompts
+      why_bad: Wastes context tokens
+      what_to_do: Use progressive disclosure - load on demand
+    - name: Sync MCP calls in hooks
+      why_bad: Slow, can timeout
+      what_to_do: Use async/await, add timeouts
+    - name: Modifying settings.json without backup
+      why_bad: Can break Claude Code
+      what_to_do: Always backup before modifying settings
+  commands:
+    bootstrap_start: bun "~/.claude/hooks/pai-bootstrap-all.ts" start
+    bootstrap_context: bun "~/.claude/hooks/pai-bootstrap-all.ts" context
+    bootstrap_end: bun "~/.claude/hooks/pai-bootstrap-all.ts" end
+    pai_status: bun "~/.claude/hooks/pai-status.ts"
+    learning_stats: bun "~/.claude/hooks/cross-project-learning.ts" stats
+  env_vars:
+    required:
+      - HOME or USERPROFILE
+    optional:
+      - PAI_DIR
+      - DA
+      - DA_VOICE_ID
+  testing:
+    unit: bun test in individual hook files
+    integration: manual invocation via bun
+    e2e: full session test with @Kai trigger
+  update_history:
+    - version: 2
+      date: 2025-12-16T10:19:02.880Z
+      changes: "Added locations: components; Files modified: 3 (md, sh, tsx)"
+    - version: 1
+      date: 2025-12-16T12:00:00Z
+      changes: Initial expertise file created for agent expert system

@@ -1,14 +1,69 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp@1.0.31"
+      ],
+      "env": {
+        "CLIENT_IP_ENCRYPTION_KEY": "pai-context7-key-2024"
+      }
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ]
+    },
+    "memory": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-memory"
+      ]
+    },
+    "github": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+      }
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@latest"
+      ]
+    },
+    "hostinger": {
+      "command": "hostinger-api-mcp",
+      "env": {
+        "APITOKEN": "${HOSTINGER_API_TOKEN}"
+      }
+    }
+  },
   "env": {
     "MCP_API_KEY": "REDACTED",
     "DISABLE_INTERLEAVED_THINKING": "true",
     "DA": "Jarvis",
-    "PAI_DIR": "C:\\Users\\HeinvanVuuren\\.claude"
+    "PAI_DIR": "C:/Users/HeinvanVuuren/.claude",
+    "DA_COLOR": "purple",
+    "PAI_META_PROMPT_ENABLED": "true",
+    "PAI_META_PROMPT_ARCHIVAL": "true",
+    "PAI_META_PROMPT_MIN_CLARITY": "6",
+    "HOSTINGER_API_TOKEN": "oAm20sdLlq5B3awnS8DJgpBxZzc235Wu2xZlLuP02200615"
   },
   "permissions": {
     "allow": [
       "Bash",
+      "Bash(bun *)",
       "Read(*)",
       "Write(*)",
       "Edit(*)",
@@ -63,97 +118,44 @@
   "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [],
   "hooks": {
-    "SessionStart": [
+    "PreToolUse": [
       {
         "matcher": "*",
         "hooks": [
           {
             "type": "command",
-            "command": "bun C:\\Jarvis\\AI Workspace\\Personal_AI_Infrastructure\\.claude\\hooks\\load-core-context.ts",
-            "description": "Load PAI.md core context"
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/capture-all-events.ts --event-type PreToolUse"
           },
           {
             "type": "command",
-            "command": "bun C:\\Jarvis\\AI Workspace\\Personal_AI_Infrastructure\\.claude\\hooks\\initialize-pai-session.ts",
-            "description": "Initialize PAI session (voice, tab title)"
-          },
-          {
-            "type": "command",
-            "command": "bun C:\\Jarvis\\AI Workspace\\Personal_AI_Infrastructure\\.claude\\hooks\\content-scanner-hook.ts",
-            "description": "Scan for new AI/coding content"
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/prompt-injection-guard.ts"
           }
         ]
-      }
-    ],
-    "UserPromptSubmit": [
+      },
       {
-        "matcher": "*",
+        "matcher": "mcp__Ref__*",
         "hooks": [
           {
             "type": "command",
-            "command": "bun C:\\Jarvis\\AI Workspace\\Personal_AI_Infrastructure\\.claude\\hooks\\smart-context-loader.ts",
-            "description": "🧠 CONTEXT ENGINEERING: Analyze prompt and suggest relevant protocols (saves ~10k tokens)"
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/ref-tools-integration.ts"
           }
         ]
-      }
-    ],
-    "Stop": [
+      },
       {
-        "matcher": "*",
+        "matcher": "Write|Edit|MultiEdit",
         "hooks": [
           {
             "type": "command",
-            "command": "bun C:\\Jarvis\\AI Workspace\\Personal_AI_Infrastructure\\.claude\\hooks\\stop-hook.ts",
-            "description": "Voice notifications and tab title updates"
-          },
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/pre-file-write.ts"
+          }
+        ]
+      },
+      {
+        "matcher": "EnterPlanMode",
+        "hooks": [
           {
             "type": "command",
-            "command": "bun C:\\Jarvis\\AI Workspace\\Personal_AI_Infrastructure\\.claude\\hooks\\memory-maintenance-hook.ts",
-            "description": "💾 CONTEXT ENGINEERING: Update memory system for session persistence"
-          }
-        ]
-      }
-    ],
-    "Edit": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "typescript",
-            "path": "C:\\Jarvis\\AI Workspace\\Personal_AI_Infrastructure\\.claude\\hooks\\post-file-edit.ts"
-          }
-        ]
-      }
-    ],
-    "Write": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "typescript",
-            "path": "C:\\Jarvis\\AI Workspace\\Personal_AI_Infrastructure\\.claude\\hooks\\post-file-edit.ts"
-          }
-        ]
-      }
-    ],
-    "MultiEdit": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "typescript",
-            "path": "C:\\Jarvis\\AI Workspace\\Personal_AI_Infrastructure\\.claude\\hooks\\post-file-edit.ts"
-          }
-        ]
-      }
-    ],
-    "PreBash": [
-      {
-        "matcher": "git commit*",
-        "hooks": [
-          {
-            "type": "typescript",
-            "path": "C:\\Jarvis\\AI Workspace\\Personal_AI_Infrastructure\\.claude\\hooks\\pre-commit.ts"
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/plan-mode-model-switcher.ts enter"
           }
         ]
       }
@@ -163,38 +165,273 @@
         "matcher": "*",
         "hooks": [
           {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/capture-all-events.ts --event-type PostToolUse"
+          },
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/token-tracker.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/auto-prompt-archival.ts"
+          },
+          {
             "type": "typescript",
-            "path": "C:\\Jarvis\\AI Workspace\\Personal_AI_Infrastructure\\.claude\\hooks\\post-tool-use.ts"
+            "path": "C:/Users/HeinvanVuuren/.claude/hooks/post-tool-use.ts"
           },
           {
             "type": "command",
-            "command": "bun C:\\Jarvis\\AI Workspace\\Personal_AI_Infrastructure\\.claude\\hooks\\token-tracker.ts"
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/tool-cache.ts"
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/auto-research-trigger.ts"
           },
           {
             "type": "command",
-            "command": "bun C:\\Jarvis\\AI Workspace\\Personal_AI_Infrastructure\\.claude\\hooks\\tool-cache.ts"
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/auto-skill-creator.ts"
+          },
+          {
+            "type": "typescript",
+            "path": "C:/Users/HeinvanVuuren/.claude/hooks/post-file-edit.ts"
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/agent-updater.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/auto-update-project-knowledge.ts"
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/docker-agents.ts"
+          }
+        ]
+      },
+      {
+        "matcher": "ExitPlanMode",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/plan-mode-model-switcher.ts exit"
           }
         ]
       }
     ],
-    "PreToolUse": [
+    "SessionEnd": [
       {
-        "matcher": "*",
         "hooks": [
           {
             "type": "command",
-            "command": "bun C:\\Jarvis\\AI Workspace\\Personal_AI_Infrastructure\\.claude\\hooks\\prompt-injection-guard.ts"
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/capture-session-summary.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/capture-all-events.ts --event-type SessionEnd"
+          },
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/learn-and-update.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/session-tracker.ts stop"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/proactive-scanner.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/model-router.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/load-veritas-context.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/load-dynamic-requirements.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/update-tab-titles.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/auto-meta-prompt-clarification.ts"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/test-hook.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/ref-tools-integration.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/mcp-auto-reconnect.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/load-core-context.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/auto-project-setup.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/auto-generate-expertise.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/expert-load.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/load-project-memory.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/mcp-health-checker.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/initialize-pai-session.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/pai-auto-bootstrap.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/on-session-start.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/proactive-scanner.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/auto-generate-project-knowledge.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/capture-all-events.ts --event-type SessionStart"
+          },
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/session-tracker.ts start"
+          },
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/content-scanner-hook.ts"
+          }
+        ]
+      },
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/cache-expiry-checker.ts"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/stop-hook.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/capture-all-events.ts --event-type Stop"
+          },
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/expert-self-improve.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/memory-maintenance-hook.ts"
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/subagent-stop-hook.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/capture-all-events.ts --event-type SubagentStop"
           }
         ]
       }
     ],
     "PreCompact": [
       {
-        "matcher": "*",
         "hooks": [
           {
             "type": "command",
-            "command": "bun C:\\Jarvis\\AI Workspace\\Personal_AI_Infrastructure\\.claude\\hooks\\context-compression-hook.ts"
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/context-compression-hook.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/capture-all-events.ts --event-type PreCompact"
+          }
+        ]
+      }
+    ],
+    "PreBash": [
+      {
+        "matcher": "git commit*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/expert-self-improve.ts"
+          },
+          {
+            "type": "typescript",
+            "path": "C:/Users/HeinvanVuuren/.claude/hooks/pre-commit.ts"
           }
         ]
       }
@@ -202,10 +439,11 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "bash \"C:\\Jarvis\\AI Workspace\\Personal_AI_Infrastructure\\.claude\\statusline-command.sh\"",
-    "padding": 0
+    "command": "powershell -ExecutionPolicy Bypass -NoProfile -File C:\\Users\\HeinvanVuuren\\.claude\\statusline.ps1"
   },
+  "alwaysThinkingEnabled": false,
   "feedbackSurveyState": {
     "lastShownTime": 1754071370324
-  }
+  },
+  "model": "sonnet"
 }
