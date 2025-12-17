@@ -52,13 +52,12 @@
   "env": {
     "MCP_API_KEY": "REDACTED",
     "DISABLE_INTERLEAVED_THINKING": "true",
-    "DA": "Jarvis",
-    "PAI_DIR": "C:/Users/HeinvanVuuren/.claude",
+    "DA": "PAI",
+    "PAI_DIR": "$HOME/.claude",
     "DA_COLOR": "purple",
     "PAI_META_PROMPT_ENABLED": "true",
     "PAI_META_PROMPT_ARCHIVAL": "true",
-    "PAI_META_PROMPT_MIN_CLARITY": "6",
-    "HOSTINGER_API_TOKEN": "oAm20sdLlq5B3awnS8DJgpBxZzc235Wu2xZlLuP02200615"
+    "PAI_META_PROMPT_MIN_CLARITY": "6"
   },
   "permissions": {
     "allow": [
@@ -124,11 +123,11 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/capture-all-events.ts --event-type PreToolUse"
+            "command": "bun $HOME/.claude/hooks/capture-all-events.ts --event-type PreToolUse"
           },
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/prompt-injection-guard.ts"
+            "command": "bun $HOME/.claude/hooks/prompt-injection-guard.ts"
           }
         ]
       },
@@ -137,7 +136,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/ref-tools-integration.ts"
+            "command": "bun $HOME/.claude/hooks/ref-tools-integration.ts"
           }
         ]
       },
@@ -146,7 +145,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/pre-file-write.ts"
+            "command": "bun $HOME/.claude/hooks/pre-file-write.ts"
           }
         ]
       },
@@ -155,7 +154,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/plan-mode-model-switcher.ts enter"
+            "command": "bun $HOME/.claude/hooks/plan-mode-model-switcher.ts enter"
           }
         ]
       }
@@ -166,53 +165,23 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/capture-all-events.ts --event-type PostToolUse"
+            "command": "bun $HOME/.claude/hooks/capture-all-events.ts --event-type PostToolUse"
           },
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/token-tracker.ts"
+            "command": "bun $HOME/.claude/hooks/token-tracker.ts"
           },
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/auto-prompt-archival.ts"
-          },
-          {
-            "type": "typescript",
-            "path": "C:/Users/HeinvanVuuren/.claude/hooks/post-tool-use.ts"
-          },
-          {
-            "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/tool-cache.ts"
-          }
-        ]
-      },
-      {
-        "matcher": "Write|Edit|MultiEdit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/auto-research-trigger.ts"
-          },
-          {
-            "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/auto-skill-creator.ts"
+            "command": "bun $HOME/.claude/hooks/auto-prompt-archival.ts"
           },
           {
             "type": "typescript",
-            "path": "C:/Users/HeinvanVuuren/.claude/hooks/post-file-edit.ts"
-          }
-        ]
-      },
-      {
-        "matcher": "Write|Edit|MultiEdit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/agent-updater.ts"
+            "path": "$HOME/.claude/hooks/post-tool-use.ts"
           },
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/auto-update-project-knowledge.ts"
+            "command": "bun $HOME/.claude/hooks/tool-cache.ts"
           }
         ]
       },
@@ -221,7 +190,37 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/docker-agents.ts"
+            "command": "bun $HOME/.claude/hooks/auto-research-trigger.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun $HOME/.claude/hooks/auto-skill-creator.ts"
+          },
+          {
+            "type": "typescript",
+            "path": "$HOME/.claude/hooks/post-file-edit.ts"
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun $HOME/.claude/hooks/agent-updater.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun $HOME/.claude/hooks/auto-update-project-knowledge.ts"
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun $HOME/.claude/hooks/docker-agents.ts"
           }
         ]
       },
@@ -230,7 +229,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/plan-mode-model-switcher.ts exit"
+            "command": "bun $HOME/.claude/hooks/plan-mode-model-switcher.ts exit"
           }
         ]
       }
@@ -240,19 +239,19 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/capture-session-summary.ts"
+            "command": "bun $HOME/.claude/hooks/capture-session-summary.ts"
           },
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/capture-all-events.ts --event-type SessionEnd"
+            "command": "bun $HOME/.claude/hooks/capture-all-events.ts --event-type SessionEnd"
           },
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/learn-and-update.ts"
+            "command": "bun $HOME/.claude/hooks/learn-and-update.ts"
           },
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/session-tracker.ts stop"
+            "command": "bun $HOME/.claude/hooks/session-tracker.ts stop"
           }
         ]
       }
@@ -262,27 +261,27 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/proactive-scanner.ts"
+            "command": "bun $HOME/.claude/hooks/proactive-scanner.ts"
           },
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/model-router.ts"
+            "command": "bun $HOME/.claude/hooks/model-router.ts"
           },
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/load-veritas-context.ts"
+            "command": "bun $HOME/.claude/hooks/load-veritas-context.ts"
           },
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/load-dynamic-requirements.ts"
+            "command": "bun $HOME/.claude/hooks/load-dynamic-requirements.ts"
           },
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/update-tab-titles.ts"
+            "command": "bun $HOME/.claude/hooks/update-tab-titles.ts"
           },
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/auto-meta-prompt-clarification.ts"
+            "command": "bun $HOME/.claude/hooks/auto-meta-prompt-clarification.ts"
           }
         ]
       }
@@ -293,71 +292,71 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/test-hook.ts"
+            "command": "bun $HOME/.claude/hooks/test-hook.ts"
           },
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/ref-tools-integration.ts"
+            "command": "bun $HOME/.claude/hooks/ref-tools-integration.ts"
           },
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/mcp-auto-reconnect.ts"
+            "command": "bun $HOME/.claude/hooks/mcp-auto-reconnect.ts"
           },
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/load-core-context.ts"
+            "command": "bun $HOME/.claude/hooks/load-core-context.ts"
           },
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/auto-project-setup.ts"
+            "command": "bun $HOME/.claude/hooks/auto-project-setup.ts"
           },
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/auto-generate-expertise.ts"
+            "command": "bun $HOME/.claude/hooks/auto-generate-expertise.ts"
           },
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/expert-load.ts"
+            "command": "bun $HOME/.claude/hooks/expert-load.ts"
           },
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/load-project-memory.ts"
+            "command": "bun $HOME/.claude/hooks/load-project-memory.ts"
           },
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/mcp-health-checker.ts"
+            "command": "bun $HOME/.claude/hooks/mcp-health-checker.ts"
           },
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/initialize-pai-session.ts"
+            "command": "bun $HOME/.claude/hooks/initialize-pai-session.ts"
           },
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/pai-auto-bootstrap.ts"
+            "command": "bun $HOME/.claude/hooks/pai-auto-bootstrap.ts"
           },
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/on-session-start.ts"
+            "command": "bun $HOME/.claude/hooks/on-session-start.ts"
           },
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/proactive-scanner.ts"
+            "command": "bun $HOME/.claude/hooks/proactive-scanner.ts"
           },
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/auto-generate-project-knowledge.ts"
+            "command": "bun $HOME/.claude/hooks/auto-generate-project-knowledge.ts"
           },
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/capture-all-events.ts --event-type SessionStart"
+            "command": "bun $HOME/.claude/hooks/capture-all-events.ts --event-type SessionStart"
           },
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/session-tracker.ts start"
+            "command": "bun $HOME/.claude/hooks/session-tracker.ts start"
           },
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/content-scanner-hook.ts"
+            "command": "bun $HOME/.claude/hooks/content-scanner-hook.ts"
           }
         ]
       },
@@ -366,7 +365,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/cache-expiry-checker.ts"
+            "command": "bun $HOME/.claude/hooks/cache-expiry-checker.ts"
           }
         ]
       }
@@ -376,19 +375,19 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/stop-hook.ts"
+            "command": "bun $HOME/.claude/hooks/stop-hook.ts"
           },
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/capture-all-events.ts --event-type Stop"
+            "command": "bun $HOME/.claude/hooks/capture-all-events.ts --event-type Stop"
           },
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/expert-self-improve.ts"
+            "command": "bun $HOME/.claude/hooks/expert-self-improve.ts"
           },
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/memory-maintenance-hook.ts"
+            "command": "bun $HOME/.claude/hooks/memory-maintenance-hook.ts"
           }
         ]
       }
@@ -398,11 +397,11 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/subagent-stop-hook.ts"
+            "command": "bun $HOME/.claude/hooks/subagent-stop-hook.ts"
           },
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/capture-all-events.ts --event-type SubagentStop"
+            "command": "bun $HOME/.claude/hooks/capture-all-events.ts --event-type SubagentStop"
           }
         ]
       }
@@ -412,11 +411,11 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/context-compression-hook.ts"
+            "command": "bun $HOME/.claude/hooks/context-compression-hook.ts"
           },
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/capture-all-events.ts --event-type PreCompact"
+            "command": "bun $HOME/.claude/hooks/capture-all-events.ts --event-type PreCompact"
           }
         ]
       }
@@ -427,11 +426,11 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun C:/Users/HeinvanVuuren/.claude/hooks/expert-self-improve.ts"
+            "command": "bun $HOME/.claude/hooks/expert-self-improve.ts"
           },
           {
             "type": "typescript",
-            "path": "C:/Users/HeinvanVuuren/.claude/hooks/pre-commit.ts"
+            "path": "$HOME/.claude/hooks/pre-commit.ts"
           }
         ]
       }

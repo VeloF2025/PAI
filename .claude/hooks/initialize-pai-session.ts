@@ -94,6 +94,134 @@ async function testStopHook() {
   }
 }
 
+async function checkPAIStatus() {
+  const paiDir = process.env.PAI_DIR || join(homedir(), '.claude');
+  const projectDir = process.cwd();
+
+  // Count global skills
+  const skillsDir = join(paiDir, 'skills');
+  let globalSkills = 0;
+  try {
+    if (existsSync(skillsDir)) {
+      const { readdir } = await import('fs/promises');
+      const entries = await readdir(skillsDir, { withFileTypes: true });
+      globalSkills = entries.filter(d => d.isDirectory()).length;
+    }
+  } catch (e) {
+    // Silently ignore errors reading skills
+  }
+
+  // Count global hooks
+  const hooksDir = join(paiDir, 'hooks');
+  let globalHooks = 0;
+  try {
+    if (existsSync(hooksDir)) {
+      const { readdir } = await import('fs/promises');
+      const hookFiles = await readdir(hooksDir);
+      globalHooks = hookFiles.filter(f => f.endsWith('.ts') || f.endsWith('.js')).length;
+    }
+  } catch (e) {
+    // Silently ignore errors reading hooks
+  }
+
+  // Check for project-specific agents (check multiple locations)
+  const projectAgentsPaths = [
+    join(projectDir, '.claude', 'agents', 'project_agents.yaml'),  // New PAI location
+    join(projectDir, '.archon', 'project_agents.yaml'),            // Legacy Archon location
+  ];
+
+  let projectAgents = 0;
+  let projectComplexity = 'N/A';
+
+  for (const projectAgentsFile of projectAgentsPaths) {
+    if (existsSync(projectAgentsFile)) {
+      try {
+        const yaml = await Bun.file(projectAgentsFile).text();
+
+        // Count agents under 'agents:' section (new format)
+        const agentsMatch = yaml.match(/^agents:\s*$/m);
+        if (agentsMatch) {
+          // Count "- name:" entries under agents section
+          const agentNameMatches = yaml.match(/^\s*- name:/gm);
+          projectAgents = agentNameMatches ? agentNameMatches.length : 0;
+        }
+
+        // Also check for 'specialized_agents:' section (legacy format)
+        if (projectAgents === 0) {
+          const specializedAgentsMatch = yaml.match(/^specialized_agents:\s*$/m);
+          if (specializedAgentsMatch) {
+            const startIdx = yaml.indexOf('specialized_agents:');
+            const afterStart = yaml.slice(startIdx + 'specialized_agents:'.length);
+            const nextSectionMatch = afterStart.match(/\n[a-z_]+:/);
+            const endIdx = nextSectionMatch ? startIdx + 'specialized_agents:'.length + afterStart.indexOf(nextSectionMatch[0]) : yaml.length;
+            const agentsSection = yaml.slice(startIdx, endIdx);
+
+            const agentMatches = agentsSection.match(/^  [a-z_]+_specialist:|^  [a-z_]+_agent:|^  [a-z_]+_architect:/gm);
+            projectAgents = agentMatches ? agentMatches.length : 0;
+          }
+        }
+
+        // Extract complexity score (try both formats)
+        const complexityMatch = yaml.match(/complexity_score:\s*([\d.]+)/) || yaml.match(/complexity:\s*([\d.]+)/);
+        if (complexityMatch) {
+          projectComplexity = `${complexityMatch[1]}/10`;
+        }
+
+        // Found agents, no need to check other paths
+        if (projectAgents > 0) break;
+      } catch (e) {
+        // Ignore errors reading project agents
+      }
+    }
+  }
+
+  // Check validation system
+  const validationDir = join(paiDir, 'validation');
+  const dgtsEnabled = existsSync(join(validationDir, 'dgts'));
+  const nlnhEnabled = existsSync(join(validationDir, 'nlnh'));
+  const projectFactoryEnabled = existsSync(join(validationDir, 'project_factory'));
+
+  return {
+    globalSkills,
+    globalHooks,
+    projectAgents,
+    projectComplexity,
+    validationEnabled: dgtsEnabled && nlnhEnabled && projectFactoryEnabled,
+    projectDir
+  };
+}
+
+async function displayPAIStatus() {
+  const status = await checkPAIStatus();
+  const daName = process.env.DA || 'AI Assistant';
+
+  const statusBox = `
+╔═══════════════════════════════════════════════════════════╗
+║  🤖 ${daName.toUpperCase()} PAI SYSTEM ACTIVATED                       ║
+╠═══════════════════════════════════════════════════════════╣
+║  📦 Global Skills:        ${status.globalSkills.toString().padEnd(30)} ║
+║  🔧 Global Hooks:         ${status.globalHooks.toString().padEnd(30)} ║
+${status.projectAgents > 0
+  ? `║  ⚡ Project Agents:       ${status.projectAgents.toString().padEnd(30)} ║
+║  📊 Project Complexity:   ${status.projectComplexity.padEnd(30)} ║`
+  : `║  ⚡ Project Agents:       Generating on first use...      ║`}
+║  🛡️  Validation System:   ${status.validationEnabled ? '✅ Enabled' : '⚠️  Not Configured'}${status.validationEnabled ? '                      ' : '             '} ║
+╠═══════════════════════════════════════════════════════════╣
+║  📁 Project: ${status.projectDir.slice(-42).padEnd(42)} ║
+╚═══════════════════════════════════════════════════════════╝
+`;
+
+  // Output to system reminder for Claude to display
+  console.log(`<system-reminder>
+PAI_STATUS_REPORT
+${statusBox}
+Claude: Please display this PAI status box to the user immediately.
+</system-reminder>`);
+
+  // Also try stderr for terminal visibility
+  console.error(statusBox);
+}
+
 async function main() {
   try {
     // Check if this is a subagent session - if so, exit silently
@@ -110,12 +238,15 @@ async function main() {
     // Test stop-hook first (only for main sessions)
     const stopHookOk = await testStopHook();
 
-    const daName = process.env.DA || 'AI Assistant';
-    const message = `${daName} here, ready to go.`;
-
     if (!stopHookOk) {
       console.error('\n⚠️ STOP-HOOK ISSUE DETECTED - Tab titles may not update automatically');
     }
+
+    // Display PAI status report
+    await displayPAIStatus();
+
+    const daName = process.env.DA || 'AI Assistant';
+    const message = `${daName} here, ready to go.`;
 
     // Note: PAI core context loading is handled by load-core-context.ts hook
     // which should run BEFORE this hook in settings.json SessionStart hooks

@@ -154,12 +154,12 @@ mkdir -p "$CLAUDE_DIR/memories"
 mkdir -p "$CLAUDE_DIR/expertise"
 mkdir -p "$CLAUDE_DIR/protocols"
 
-# Copy hooks
-echo -e "Copying hooks..."
-cp "$PAI_DIR/.claude/hooks/auto-generate-expertise.ts" "$CLAUDE_DIR/hooks/"
-cp "$PAI_DIR/.claude/hooks/expert-load.ts" "$CLAUDE_DIR/hooks/"
-cp "$PAI_DIR/.claude/hooks/expert-self-improve.ts" "$CLAUDE_DIR/hooks/"
+# Copy ALL hooks from PAI repo
+echo -e "Copying all PAI hooks..."
+echo -e "  ${BLUE}→ Core PAI hooks...${NC}"
+cp "$PAI_DIR/.claude/hooks/"*.ts "$CLAUDE_DIR/hooks/"
 chmod +x "$CLAUDE_DIR/hooks/"*.ts
+echo -e "  ${GREEN}${CHECK} Copied all hooks${NC}"
 
 # Copy settings
 cp "$PAI_DIR/.claude/settings.json" "$CLAUDE_DIR/settings.json"
@@ -206,9 +206,13 @@ echo ""
 
 # Check if settings.json has the required hooks
 hooks_to_check=(
+    "initialize-pai-session.ts"
+    "pai-auto-bootstrap.ts"
     "auto-generate-expertise.ts"
     "expert-load.ts"
+    "auto-generate-project-knowledge.ts"
     "expert-self-improve.ts"
+    "memory-maintenance-hook.ts"
 )
 
 for hook in "${hooks_to_check[@]}"; do
