@@ -161,8 +161,8 @@ cp "$PAI_DIR/.claude/hooks/"*.ts "$CLAUDE_DIR/hooks/"
 chmod +x "$CLAUDE_DIR/hooks/"*.ts
 echo -e "  ${GREEN}${CHECK} Copied all hooks${NC}"
 
-# Copy settings
-cp "$PAI_DIR/.claude/settings.json" "$CLAUDE_DIR/settings.json"
+# Copy settings template to global ~/.claude/
+cp "$PAI_DIR/.claude/settings.template.json" "$CLAUDE_DIR/settings.json"
 
 # Copy documentation
 cp "$PAI_DIR/.claude/AUTO-EXPERTISE-SYSTEM.md" "$CLAUDE_DIR/"
