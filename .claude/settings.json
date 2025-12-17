@@ -438,7 +438,7 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "powershell -ExecutionPolicy Bypass -NoProfile -File C:\\Users\\HeinvanVuuren\\.claude\\statusline.ps1"
+    "command": "bash $HOME/.claude/statusline-command.sh"
   },
   "alwaysThinkingEnabled": false,
   "feedbackSurveyState": {
