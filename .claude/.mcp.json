@@ -19,40 +19,9 @@
       "command": "bunx",
       "args": ["-y", "@modelcontextprotocol/server-github"],
       "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_PAT}"
       },
       "description": "GitHub repository automation - PR creation, issue management, code search"
-    },
-    "veritas": {
-      "type": "http",
-      "url": "http://localhost:8061",
-      "description": "Veritas truth-enforcing coding assistant with DGTS + NLNH protocols. Start with: docker compose -f docker-compose.veritas.yml up -d"
-    },
-    "httpx": {
-      "type": "http",
-      "description": "Use for getting information on web servers or site stack information, like what tech stack a given website is running, and other similar use cases.",
-      "url": "https://httpx-mcp.danielmiessler.workers.dev",
-      "headers": {
-        "x-api-key": "REDACTED"
-      }
-    },
-    "content": {
-      "type": "http",
-      "description": "Figuring out any of my (Daniel Miessler's) opinions or blog posts or writing online. This is basically an archive of all my content.",
-      "url": "https://content-mcp.danielmiessler.workers.dev"
-    },
-    "daemon": {
-      "type": "http",
-      "description": "My personal API for everything in my (Daniel Miessler's) life.",
-      "url": "https://mcp.daemon.danielmiessler.com"
-    },
-    "Foundry": {
-      "type": "http",
-      "description": "My personal AI infrastructure (PAI), which is where you should look for any tool where I ask you to do a task that you're not sure how to do. Start by checking here to see if there's a tool for it.",
-      "url": "https://api.danielmiessler.com/mcp/",
-      "headers": {
-        "Authorization": "REDACTED"
-      }
     },
     "naabu": {
       "type": "http",
@@ -62,49 +31,20 @@
         "x-api-key": "REDACTED"
       }
     },
-    "brightdata": {
-      "command": "bunx",
-      "args": [
-        "-y",
-        "@brightdata/mcp"
-      ],
-      "env": {
-        "API_TOKEN": "REDACTED"
-      }
-    },
-    "stripe": {
-      "command": "bunx",
-      "args": [
-        "-y",
-        "@stripe/mcp",
-        "--tools=all"
-      ],
-      "description": "Stripe payment processing and financial operations"
-    },
     "Ref": {
       "command": "bunx",
-      "args": [
-        "@refdotai/mcp"
-      ],
+      "args": ["@refdotai/mcp"],
       "description": "Documentation search and reading from public sources and private repositories"
-    },
-    "apify": {
-      "command": "bunx",
-      "args": [
-        "@apify/actors-mcp-server"
-      ],
-      "env": {
-        "APIFY_TOKEN": "REDACTED"
-      },
-      "description": "Web scraping and automation tools via Apify platform"
     },
     "playwright": {
       "command": "bunx",
-      "args": [
-        "@playwright/mcp@latest",
-        "--extension"
-      ],
+      "args": ["@playwright/mcp@latest", "--extension"],
       "description": "Browser automation and testing using Playwright for visual debugging and web interaction"
+    },
+    "chrome-devtools": {
+      "command": "bunx",
+      "args": ["chrome-devtools-mcp@latest"],
+      "description": "Chrome DevTools Protocol for browser automation and debugging"
     },
     "claude-prompts": {
       "command": "node.exe",
@@ -116,6 +56,13 @@
         "MCP_PROMPTS_CONFIG_PATH": "C:\\Users\\HeinvanVuuren\\claude-prompts-mcp\\server\\prompts\\promptsConfig.json"
       },
       "description": "PAI prompt enhancement system with 8 specialized tools for optimizing prompts for research, coding, agents, and multi-agent orchestration. Includes CAGEERF, ReACT, and other thinking frameworks."
+    },
+    "boss-ghost-mcp": {
+      "command": "node.exe",
+      "args": [
+        "C:\\Jarvis\\AI Workspace\\boss-ghost-mcp\\build\\src\\index.js"
+      ],
+      "description": "Advanced browser automation with stealth, autonomy, and self-healing features. Phase 2 tools: autonomous exploration (BFS), session memory persistence, CAPTCHA auto-detection (5 types), smart click with 7-tier fallback, intelligent retry with exponential backoff. Production-ready with 93.7% test pass rate."
     }
   }
 }
