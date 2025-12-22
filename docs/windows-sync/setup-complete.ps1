@@ -32,7 +32,7 @@ $Projects = @(
     @{ Name = "BOSS"; Path = "C:\Jarvis\AI Workspace\BOSS"; Branch = "master" },
     @{ Name = "boss-ghost-mcp"; Path = "C:\Jarvis\AI Workspace\boss-ghost-mcp"; Branch = "main" },
     @{ Name = "FF_Next.js"; Path = "C:\Jarvis\AI Workspace\FF_Next.js"; Branch = "master" },
-    @{ Name = "PAI"; Path = "C:\Jarvis\AI Workspace\PAI"; Branch = "main" }
+    @{ Name = "PAI"; Path = "C:\Jarvis\AI Workspace\Personal_AI_Infrastructure"; Branch = "main" }
 )
 
 function Sync-Project { param([string]$Name, [string]$Path, [string]$Branch)
@@ -70,7 +70,7 @@ $Projects = @(
     @{ Name = "BOSS"; Path = "C:\Jarvis\AI Workspace\BOSS"; Branch = "master" },
     @{ Name = "boss-ghost-mcp"; Path = "C:\Jarvis\AI Workspace\boss-ghost-mcp"; Branch = "main" },
     @{ Name = "FF_Next.js"; Path = "C:\Jarvis\AI Workspace\FF_Next.js"; Branch = "master" },
-    @{ Name = "PAI"; Path = "C:\Jarvis\AI Workspace\PAI"; Branch = "main" }
+    @{ Name = "PAI"; Path = "C:\Jarvis\AI Workspace\Personal_AI_Infrastructure"; Branch = "main" }
 )
 
 foreach ($Project in $Projects) {
