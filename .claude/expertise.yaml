@@ -1,12 +1,12 @@
 # Project Expertise - Auto-updated by expert-self-improve hook
-# Last updated: 2025-12-16T10:19:02.880Z
-# Version: 2
+# Last updated: 2025-12-19T03:09:15.155Z
+# Version: 3
 
 expertise:
   project: Personal_AI_Infrastructure
   domain: ai-infrastructure
-  version: 2
-  last_updated: 2025-12-16T10:19:02.880Z
+  version: 3
+  last_updated: 2025-12-19T03:09:15.155Z
   stack:
     language: typescript
     runtime: bun
@@ -21,6 +21,8 @@ expertise:
     lib: lib/
     scripts: scripts/
     tests: tests/
+    hooks: .claude/hooks/stt
+    public: .claude/stt-server/public
   relationships:
     - from: skills
       to: hooks
@@ -139,6 +141,9 @@ expertise:
     integration: manual invocation via bun
     e2e: full session test with @Kai trigger
   update_history:
+    - version: 3
+      date: 2025-12-19T03:09:15.155Z
+      changes: "Added locations: hooks, public; Files modified: 48 (md, ts, py, sh, html, yml, json)"
     - version: 2
       date: 2025-12-16T10:19:02.880Z
       changes: "Added locations: components; Files modified: 3 (md, sh, tsx)"

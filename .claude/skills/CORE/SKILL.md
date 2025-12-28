@@ -7,6 +7,18 @@ description: PAI (Personal AI Infrastructure) - Your AI system core. AUTO-LOADS 
 
 **Auto-loads at session start.** This skill defines your PAI's identity, mandatory response format, and core operating principles.
 
+## PAI Trigger System
+
+PAI has **three distinct autonomous modes** with different triggers:
+
+| Trigger | Purpose | Scope |
+|---------|---------|-------|
+| **@PAI / @Kai** | Load full PAI context | Global (this loads extended CORE context) |
+| **@pai-auto** | TDD autonomous loop | Project-specific (defined in project CLAUDE.md) |
+| **/auto** | ACH from PRD | Global skill (Autonomous Coding from PRD) |
+
+**Documentation**: See `~/.claude/protocols/pai-triggers-reference.md` for complete details.
+
 ## Workflow Routing
 
 **When executing a workflow, call the notification script via Bash:**
