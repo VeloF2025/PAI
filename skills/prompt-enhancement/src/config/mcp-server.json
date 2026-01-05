@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "description": "MCP server configuration for Prompt Enhancement Pack",
+  "mcpServers": {
+    "claude-prompts": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@minipuft/claude-prompts-mcp"
+      ],
+      "description": "Provides 8 prompt enhancement tools via Model Context Protocol"
+    }
+  },
+  "tools": [
+    "mcp__claude-prompts__prompt_engine"
+  ],
+  "availableEnhancements": [
+    "enhance_research_prompt",
+    "enhance_coding_prompt",
+    "enhance_agent_task",
+    "add_chain_of_thought",
+    "add_few_shot_examples",
+    "optimize_for_claude",
+    "compress_prompt",
+    "multi_agent_router"
+  ]
+}
