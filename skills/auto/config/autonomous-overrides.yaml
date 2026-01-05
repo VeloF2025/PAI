@@ -1,0 +1,176 @@
+# Autonomous Mode Overrides
+# Human-in-Loop (HIL) bypasses for fully autonomous operation
+
+# Overview
+# In autonomous mode, these approval gates are DISABLED to allow
+# zero-interaction development. Safety is still maintained through
+# sandbox, permissions, and blocked operations.
+
+# Human-in-Loop Gates (DISABLED in autonomous mode)
+humanInLoop:
+  # Phase Approval Gates
+  phaseApprovals:
+    enabled: false  # Don't wait for user approval between phases
+    plan_product: false  # Phase 1 approval
+    shape_spec: false  # Phase 2 approval
+    write_spec: false  # Phase 3 approval
+    create_tasks: false  # Phase 4 approval
+    implement_prep: false  # Phase 5 approval
+    orchestrate_tasks: false  # Phase 6 approval
+
+  # Stage Approval Gates
+  stageApprovals:
+    enabled: false  # Don't wait for user approval between stages
+    beforePlanning: false  # Before Stage 1 (PAI Planning)
+    beforeCoding: false  # Before Stage 2 (ACH Coding)
+    beforeValidation: false  # Before Stage 3 (Final Validation)
+
+  # File Operation Approvals
+  fileOperations:
+    createFile: false  # Auto-approve file creation
+    editFile: false  # Auto-approve file editing
+    deleteFile: true  # STILL REQUIRES APPROVAL (safety)
+    moveFile: false  # Auto-approve file moving
+    multiEdit: false  # Auto-approve batch edits
+
+  # Command Execution Approvals
+  commandExecution:
+    runCommand: false  # Auto-approve command execution
+    installPackage: false  # Auto-approve package installation
+    runTests: false  # Auto-approve test execution
+    buildProject: false  # Auto-approve build commands
+
+  # Git Operation Approvals
+  gitOperations:
+    commit: true  # STILL REQUIRES APPROVAL (user preference)
+    push: true  # STILL REQUIRES APPROVAL (user preference)
+    createBranch: false  # Auto-approve branch creation
+    checkout: false  # Auto-approve branch checkout
+    merge: true  # STILL REQUIRES APPROVAL (safety)
+
+  # Validation Approvals
+  validationOperations:
+    runValidation: false  # Auto-approve validation
+    retryValidation: false  # Auto-approve validation retries
+    skipValidation: true  # REQUIRES APPROVAL to skip
+
+  # ACH Session Approvals
+  achSessions:
+    startSession: false  # Auto-approve session start
+    continueSession: false  # Auto-approve session continuation
+    retrySession: false  # Auto-approve session retry
+    abortSession: true  # REQUIRES APPROVAL to abort
+
+# Safety Overrides (NEVER DISABLED)
+# These safety mechanisms remain active even in autonomous mode
+safety:
+  sandbox: true  # ALWAYS ENFORCED
+  permissions: true  # ALWAYS ENFORCED
+
+  # Blocked Operations (ALWAYS BLOCKED)
+  blockedOperations:
+    - deleteDatabase  # Never auto-approve
+    - systemFileModification  # Never auto-approve
+    - networkExfiltration  # Never auto-approve
+    - processTermination  # Never auto-approve (see CLAUDE.md rules)
+    - sensitiveDataExposure  # Never auto-approve
+    - securityBypass  # Never auto-approve
+
+  # Sensitive Operations (ALWAYS REQUIRE APPROVAL)
+  sensitiveOperations:
+    - deleteMultipleFiles  # Always requires approval
+    - modifySystemConfig  # Always requires approval
+    - changePermissions  # Always requires approval
+    - accessCredentials  # Always requires approval
+    - executePrivileged  # Always requires approval
+
+# Autonomous Behavior Configuration
+autonomousBehavior:
+  # Decision Making
+  makeDecisions: true  # Auto-make implementation decisions
+  resolveConflicts: true  # Auto-resolve file conflicts
+  selectPatterns: true  # Auto-select implementation patterns
+  chooseLibraries: true  # Auto-choose libraries/dependencies
+
+  # Error Handling
+  autoRetry: true  # Auto-retry on failures
+  autoRecover: true  # Auto-recover from errors
+  autoFallback: true  # Auto-fallback to alternatives
+  autoAdjust: true  # Auto-adjust validation thresholds
+
+  # Optimization
+  autoOptimize: true  # Auto-optimize code/performance
+  autoRefactor: false  # Don't auto-refactor (outside scope)
+  autoCleanup: true  # Auto-cleanup temporary files
+  autoFormat: true  # Auto-format code
+
+# Environment Variables (Set in autonomous mode)
+environmentVariables:
+  PAI_AUTONOMOUS_MODE: "true"
+  PAI_REQUIRE_APPROVALS: "false"
+  PAI_HUMAN_IN_LOOP: "false"
+  PAI_AUTO_COMMIT: "false"  # User preference
+  PAI_AUTO_PUSH: "false"  # User preference
+  PAI_VALIDATION_LEVEL: "checkpoint"  # Hybrid validation
+  PAI_LEARNING_ENABLED: "true"
+  PAI_SANDBOX_ENABLED: "true"  # Safety maintained
+  PAI_PERMISSIONS_ENABLED: "true"  # Safety maintained
+
+# Notification Preferences (Autonomous mode)
+notifications:
+  # Minimal notifications (user can monitor via status)
+  onError: false  # Don't interrupt on errors (auto-retry)
+  onWarning: false  # Don't interrupt on warnings
+  onPhaseComplete: false  # Don't notify per phase
+  onStageComplete: false  # Don't notify per stage
+  onCompletion: true  # Notify on final completion ONLY
+
+# Logging Preferences (Autonomous mode)
+logging:
+  verbose: false  # Standard logging (not verbose)
+  realtime: false  # Don't stream logs real-time
+  saveToFile: true  # Save logs for review
+  includeTimestamps: true
+  includeMetrics: true
+
+# Monitoring (Autonomous mode)
+monitoring:
+  trackProgress: true  # Update .auto-state.json
+  reportMetrics: true  # Capture metrics for learning
+  detectAnomalies: true  # Detect and handle anomalies
+  autoAdjustThresholds: true  # Adjust based on performance
+
+# Timeout Configuration (Autonomous mode)
+timeouts:
+  increaseTimeouts: true  # Longer timeouts in autonomous mode
+  phaseTimeout: 900000  # 15 minutes per phase
+  sessionTimeout: 600000  # 10 minutes per session
+  validationTimeout: 120000  # 2 minutes for validation
+
+# Rollback Configuration
+rollback:
+  enabled: true  # Enable auto-rollback on critical failures
+  saveCheckpoints: true  # Save state at each phase
+  maxRollbacks: 2  # Maximum rollback attempts
+  abortOnMaxRollbacks: true  # Abort if max rollbacks reached
+
+# Resource Limits (Prevent runaway processes)
+resourceLimits:
+  maxMemoryUsage: 4096  # MB
+  maxCpuUsage: 80  # Percentage
+  maxDiskUsage: 10240  # MB (10 GB)
+  maxNetworkUsage: 1024  # MB
+
+# Recovery Configuration
+recovery:
+  autoResumeOnCrash: true  # Auto-resume from .auto-state.json
+  saveStateInterval: 60000  # Save state every 60 seconds
+  maxRecoveryAttempts: 3  # Maximum recovery attempts
+  abortOnMaxRecovery: true  # Abort if max recovery reached
+
+# Notes
+# - Autonomous mode prioritizes zero-interaction development
+# - Safety mechanisms (sandbox, permissions) remain active
+# - Sensitive operations still require explicit approval
+# - State persistence enables crash recovery
+# - Learning systems capture all execution data

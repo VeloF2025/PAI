@@ -1,0 +1,16 @@
+{
+  "version": "1.0",
+  "lastScan": "2025-12-18T20:38:33.081Z",
+  "sourceAdjustments": {
+    "Daniel Miessler": 0.5,
+    "Anthropic Blog": 0.3
+  },
+  "topicBoosts": {
+    "MCP": 0.5,
+    "Claude Code": 0.3,
+    "prompt engineering": 0.2
+  },
+  "interactions": [],
+  "decayFactor": 0.95,
+  "lastDecayApplied": "2025-01-01T00:00:00.000Z"
+}

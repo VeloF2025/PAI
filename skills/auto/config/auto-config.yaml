@@ -1,0 +1,125 @@
+# Auto Skill - Default Configuration
+# Override these settings with .auto-config.local.yaml in project root
+
+# Model Configuration
+models:
+  planning: claude-opus-4-5      # Stage 1: PAI Planning (Opus for better reasoning)
+  coding: claude-sonnet-4-5      # Stage 2: ACH Autonomous Coding (Sonnet for speed)
+  validation: claude-sonnet-4-5  # Stage 3: Final Validation (Sonnet for speed)
+
+# ACH Session Configuration
+maxSessions: 50  # Maximum ACH coding sessions before stopping
+checkpointInterval: 5  # Run PAI validation every N sessions
+sessionTimeout: 600000  # 10 minutes per session (milliseconds)
+maxRetries: 2  # Maximum retries per failed session
+
+# Validation Configuration
+validationLevel: standard  # Options: minimal, standard, strict, comprehensive
+phaseGateValidation: true  # Run full PAI suite after each phase
+checkpointValidation: true  # Run lightweight PAI suite at checkpoints
+finalValidation: true  # Run comprehensive PAI suite at end
+
+# Validation Thresholds
+validationThresholds:
+  nlnhConfidence: 0.80  # NLNH minimum confidence (80%)
+  dgtsMaxScore: 0.30  # DGTS maximum gaming score (30%)
+  minCompleteness: 0.95  # Minimum deliverable completeness (95%)
+  minTestCoverage: 0.95  # Minimum test coverage (95%)
+  maxTypescriptErrors: 0  # Zero TypeScript errors
+  maxEslintErrors: 0  # Zero ESLint errors
+
+# Autonomy Configuration
+autonomousMode: true  # Enable fully autonomous operation
+requireApprovals: false  # Disable human-in-loop approval gates
+autoCommit: false  # Auto-commit changes (still requires user permission)
+autoPush: false  # Auto-push to remote (still requires user permission)
+
+# Learning Configuration
+learningEnabled: true  # Feed execution data to PAI learning systems
+capturePerformance: true  # Capture performance metrics
+capturePreferences: true  # Capture agent preferences
+capturePatterns: true  # Capture pattern recognition data
+captureAdaptive: true  # Capture adaptive behavior data
+
+# Output Configuration
+outputDir: .auto-output  # Directory for PAI planning artifacts
+stateFile: .auto-state.json  # State persistence file
+featureListFile: feature_list.json  # ACH test cases file
+
+# ACH Configuration
+achLocation: C:\Jarvis\AI Workspace\BOSS Exchange\autonomous-coding
+achScript: autonomous_agent_demo.py
+achMaxIterations: 20  # Max iterations per ACH session
+
+# Error Handling
+maxValidationRetries: 3  # Maximum retries for validation failures
+retryDelay: 5000  # Delay between retries (milliseconds)
+saveStateOnError: true  # Save state when errors occur
+continueOnWarnings: true  # Continue if only warnings (not errors)
+
+# MCP Configuration
+mcpCleanupEnabled: true  # Clean up MCP processes between sessions
+mcpCleanupInterval: 1  # Clean up after every N sessions
+
+# Logging Configuration
+logLevel: info  # Options: debug, info, warn, error
+logToFile: true  # Log to .auto-output/logs/
+logTimestamps: true  # Include timestamps in logs
+logVerbose: false  # Verbose logging (debug mode)
+
+# Performance Configuration
+parallelValidation: true  # Run validators in parallel where possible
+cacheValidationResults: true  # Cache validation results (60s TTL)
+asyncOperations: true  # Use async operations for I/O
+
+# Safety Configuration
+sandbox: true  # Enforce sandbox restrictions
+permissions: true  # Enforce permission system
+blockedOperations:  # Operations that are always blocked
+  - deleteDatabase
+  - systemFileModification
+  - networkExfiltration
+  - processTermination
+
+# Phase Configuration
+phases:
+  plan_product:
+    enabled: true
+    timeout: 300000  # 5 minutes
+    validation: true
+  shape_spec:
+    enabled: true
+    timeout: 300000  # 5 minutes
+    validation: true
+  write_spec:
+    enabled: true
+    timeout: 600000  # 10 minutes
+    validation: true
+  create_tasks:
+    enabled: true
+    timeout: 300000  # 5 minutes
+    validation: true
+  implement_prep:
+    enabled: true
+    timeout: 300000  # 5 minutes
+    validation: true
+  orchestrate_tasks:
+    enabled: true
+    timeout: 600000  # 10 minutes
+    validation: true
+
+# Notification Configuration
+notifications:
+  enabled: false  # Enable notifications (future feature)
+  onPhaseComplete: false  # Notify when phase completes
+  onStageComplete: false  # Notify when stage completes
+  onError: false  # Notify on errors
+  onCompletion: false  # Notify on final completion
+
+# Advanced Configuration
+advanced:
+  useExperimentalFeatures: false  # Enable experimental features
+  debugMode: false  # Enable debug mode (verbose logging)
+  profilePerformance: false  # Profile performance metrics
+  generateReports: true  # Generate completion reports
+  archiveArtifacts: false  # Archive artifacts after completion

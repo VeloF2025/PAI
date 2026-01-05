@@ -1,0 +1,488 @@
+{
+  "discovered_at": "2025-12-16T11:55:26.024780",
+  "source_url": "http://localhost:5189",
+  "pages_scanned": [
+    "/",
+    "/email",
+    "/approvals",
+    "/channels",
+    "/settings",
+    "/templates"
+  ],
+  "components": {
+    "cards": {
+      "count": 34,
+      "samples": [
+        {
+          "className": "card min-h-[140px]",
+          "tagName": "div",
+          "childCount": 1,
+          "hasHeader": false,
+          "hasIcon": true,
+          "styles": {
+            "backgroundColor": "rgba(18, 18, 26, 0.5)",
+            "borderColor": "rgb(42, 42, 58)",
+            "borderWidth": "1px",
+            "borderRadius": "12px",
+            "padding": "24px",
+            "backdropFilter": "blur(4px)",
+            "boxShadow": "none"
+          }
+        },
+        {
+          "className": "card md:col-span-2 lg:col-span-2",
+          "tagName": "div",
+          "childCount": 4,
+          "hasHeader": true,
+          "hasIcon": true,
+          "styles": {
+            "backgroundColor": "rgba(18, 18, 26, 0.5)",
+            "borderColor": "rgb(42, 42, 58)",
+            "borderWidth": "1px",
+            "borderRadius": "12px",
+            "padding": "24px",
+            "backdropFilter": "blur(4px)",
+            "boxShadow": "none"
+          }
+        },
+        {
+          "className": "card",
+          "tagName": "div",
+          "childCount": 2,
+          "hasHeader": true,
+          "hasIcon": false,
+          "styles": {
+            "backgroundColor": "rgba(18, 18, 26, 0.5)",
+            "borderColor": "rgb(42, 42, 58)",
+            "borderWidth": "1px",
+            "borderRadius": "12px",
+            "padding": "24px",
+            "backdropFilter": "blur(4px)",
+            "boxShadow": "none"
+          }
+        },
+        {
+          "className": "card space-y-4",
+          "tagName": "div",
+          "childCount": 1,
+          "hasHeader": false,
+          "hasIcon": true,
+          "styles": {
+            "backgroundColor": "rgba(18, 18, 26, 0.5)",
+            "borderColor": "rgb(42, 42, 58)",
+            "borderWidth": "1px",
+            "borderRadius": "12px",
+            "padding": "24px",
+            "backdropFilter": "blur(4px)",
+            "boxShadow": "none"
+          }
+        },
+        {
+          "className": "card text-center py-16",
+          "tagName": "div",
+          "childCount": 3,
+          "hasHeader": false,
+          "hasIcon": true,
+          "styles": {
+            "backgroundColor": "rgba(18, 18, 26, 0.5)",
+            "borderColor": "rgb(42, 42, 58)",
+            "borderWidth": "1px",
+            "borderRadius": "12px",
+            "padding": "64px 24px",
+            "backdropFilter": "blur(4px)",
+            "boxShadow": "none"
+          }
+        }
+      ],
+      "common_classes": [
+        "card space-y-4",
+        "card border-neon-red/30",
+        "card md:col-span-2 lg:col-span-2",
+        "card border-neon-purple/30",
+        "card bg-neon-green/10 border-neon-green/30  cursor-pointer transition-all hover:scale-105",
+        "card",
+        "card border-neon-green/30",
+        "card text-center py-16",
+        "card min-h-[140px]",
+        "card border-gray-500/30"
+      ]
+    },
+    "buttons": {
+      "primary": {
+        "count": 5,
+        "samples": [
+          {
+            "className": "btn-primary bg-neon-green/20 border-neon-green/50 hover:bg-neon-green/30",
+            "tagName": "button",
+            "text": "Show Success Toast",
+            "hasIcon": false,
+            "styles": {
+              "backgroundColor": "rgba(34, 197, 94, 0.2)",
+              "color": "rgb(0, 212, 255)",
+              "borderColor": "rgba(34, 197, 94, 0.5)",
+              "borderRadius": "8px",
+              "padding": "8px 16px",
+              "fontSize": "16px",
+              "fontWeight": "500"
+            }
+          },
+          {
+            "className": "btn-primary bg-neon-red/20 border-neon-red/50 hover:bg-neon-red/30",
+            "tagName": "button",
+            "text": "Show Error Toast",
+            "hasIcon": false,
+            "styles": {
+              "backgroundColor": "rgba(239, 68, 68, 0.2)",
+              "color": "rgb(0, 212, 255)",
+              "borderColor": "rgba(239, 68, 68, 0.5)",
+              "borderRadius": "8px",
+              "padding": "8px 16px",
+              "fontSize": "16px",
+              "fontWeight": "500"
+            }
+          },
+          {
+            "className": "btn-primary bg-neon-blue/20 border-neon-blue/50 hover:bg-neon-blue/30",
+            "tagName": "button",
+            "text": "Show Info Toast",
+            "hasIcon": false,
+            "styles": {
+              "backgroundColor": "rgba(0, 212, 255, 0.2)",
+              "color": "rgb(0, 212, 255)",
+              "borderColor": "rgba(0, 212, 255, 0.5)",
+              "borderRadius": "8px",
+              "padding": "8px 16px",
+              "fontSize": "16px",
+              "fontWeight": "500"
+            }
+          }
+        ]
+      },
+      "secondary": {
+        "count": 9,
+        "samples": [
+          {
+            "className": "btn-secondary flex items-center gap-2",
+            "tagName": "button",
+            "text": "Refresh",
+            "hasIcon": true,
+            "styles": {
+              "backgroundColor": "rgb(26, 26, 36)",
+              "color": "rgb(209, 213, 219)",
+              "borderColor": "rgb(42, 42, 58)",
+              "borderRadius": "8px",
+              "padding": "8px 16px",
+              "fontSize": "16px",
+              "fontWeight": "500"
+            }
+          },
+          {
+            "className": "btn-secondary flex items-center gap-2",
+            "tagName": "button",
+            "text": "Poll Emails",
+            "hasIcon": true,
+            "styles": {
+              "backgroundColor": "rgb(26, 26, 36)",
+              "color": "rgb(209, 213, 219)",
+              "borderColor": "rgb(42, 42, 58)",
+              "borderRadius": "8px",
+              "padding": "8px 16px",
+              "fontSize": "16px",
+              "fontWeight": "500"
+            }
+          },
+          {
+            "className": "btn-secondary flex items-center gap-2",
+            "tagName": "button",
+            "text": "Refresh",
+            "hasIcon": true,
+            "styles": {
+              "backgroundColor": "rgb(26, 26, 36)",
+              "color": "rgb(209, 213, 219)",
+              "borderColor": "rgb(42, 42, 58)",
+              "borderRadius": "8px",
+              "padding": "8px 16px",
+              "fontSize": "16px",
+              "fontWeight": "500"
+            }
+          }
+        ]
+      },
+      "success": {
+        "count": 1,
+        "samples": [
+          {
+            "className": "btn-success flex items-center gap-2",
+            "tagName": "button",
+            "text": "Sync Email",
+            "hasIcon": true,
+            "styles": {
+              "backgroundColor": "rgba(34, 197, 94, 0.2)",
+              "color": "rgb(34, 197, 94)",
+              "borderColor": "rgba(34, 197, 94, 0.5)",
+              "borderRadius": "8px",
+              "padding": "8px 16px",
+              "fontSize": "16px",
+              "fontWeight": "500"
+            }
+          }
+        ]
+      },
+      "danger": {
+        "count": 3,
+        "samples": [
+          {
+            "className": "btn-danger flex items-center gap-2 ml-4",
+            "tagName": "button",
+            "text": "Delete",
+            "hasIcon": true,
+            "styles": {
+              "backgroundColor": "rgba(239, 68, 68, 0.2)",
+              "color": "rgb(239, 68, 68)",
+              "borderColor": "rgba(239, 68, 68, 0.5)",
+              "borderRadius": "8px",
+              "padding": "8px 16px",
+              "fontSize": "16px",
+              "fontWeight": "500"
+            }
+          },
+          {
+            "className": "btn-danger text-sm",
+            "tagName": "button",
+            "text": "Revoke",
+            "hasIcon": false,
+            "styles": {
+              "backgroundColor": "rgba(239, 68, 68, 0.2)",
+              "color": "rgb(239, 68, 68)",
+              "borderColor": "rgba(239, 68, 68, 0.5)",
+              "borderRadius": "8px",
+              "padding": "8px 16px",
+              "fontSize": "14px",
+              "fontWeight": "500"
+            }
+          },
+          {
+            "className": "btn-danger text-sm",
+            "tagName": "button",
+            "text": "Revoke",
+            "hasIcon": false,
+            "styles": {
+              "backgroundColor": "rgba(239, 68, 68, 0.2)",
+              "color": "rgb(239, 68, 68)",
+              "borderColor": "rgba(239, 68, 68, 0.5)",
+              "borderRadius": "8px",
+              "padding": "8px 16px",
+              "fontSize": "14px",
+              "fontWeight": "500"
+            }
+          }
+        ]
+      },
+      "other": {
+        "count": 29,
+        "samples": [
+          {
+            "className": "\n              p-2 rounded-lg transition-all duration-200 flex-shrink-0\n              bg-neon-blue/20 text-neon-blue hover:bg-neon-blue/30\n              \n            ",
+            "tagName": "button",
+            "text": "",
+            "hasIcon": true,
+            "styles": {
+              "backgroundColor": "rgba(0, 212, 255, 0.2)",
+              "color": "rgb(0, 212, 255)",
+              "borderColor": "rgb(42, 42, 58)",
+              "borderRadius": "8px",
+              "padding": "8px",
+              "fontSize": "16px",
+              "fontWeight": "400"
+            }
+          },
+          {
+            "className": "fixed bottom-4 right-4 w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-full shadow-lg hover:shadow-xl transition-all flex items-center justify-center z-40",
+            "tagName": "button",
+            "text": "",
+            "hasIcon": true,
+            "styles": {
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "color": "rgb(243, 244, 246)",
+              "borderColor": "rgb(42, 42, 58)",
+              "borderRadius": "9999px",
+              "padding": "0px",
+              "fontSize": "16px",
+              "fontWeight": "400"
+            }
+          },
+          {
+            "className": "go3489369143 go1754112896 tsqd-open-btn-container",
+            "tagName": "div",
+            "text": "",
+            "hasIcon": true,
+            "styles": {
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "color": "rgb(243, 244, 246)",
+              "borderColor": "rgb(42, 42, 58)",
+              "borderRadius": "9999px",
+              "padding": "4px",
+              "fontSize": "16px",
+              "fontWeight": "400"
+            }
+          }
+        ]
+      }
+    },
+    "badges": {
+      "count": 25,
+      "samples": [
+        {
+          "className": "badge-danger text-xs",
+          "text": "Urgent",
+          "styles": {
+            "backgroundColor": "rgba(239, 68, 68, 0.2)",
+            "color": "rgb(239, 68, 68)",
+            "borderColor": "rgba(239, 68, 68, 0.3)",
+            "borderRadius": "9999px",
+            "padding": "2px 10px",
+            "fontSize": "12px"
+          }
+        },
+        {
+          "className": "badge-success",
+          "text": "H10",
+          "styles": {
+            "backgroundColor": "rgba(34, 197, 94, 0.2)",
+            "color": "rgb(34, 197, 94)",
+            "borderColor": "rgba(34, 197, 94, 0.3)",
+            "borderRadius": "9999px",
+            "padding": "2px 10px",
+            "fontSize": "12px"
+          }
+        },
+        {
+          "className": "badge-primary",
+          "text": "Client",
+          "styles": {
+            "backgroundColor": "rgba(0, 212, 255, 0.2)",
+            "color": "rgb(0, 212, 255)",
+            "borderColor": "rgba(0, 212, 255, 0.3)",
+            "borderRadius": "9999px",
+            "padding": "2px 10px",
+            "fontSize": "12px"
+          }
+        },
+        {
+          "className": "badge-purple",
+          "text": "Blitz",
+          "styles": {
+            "backgroundColor": "rgba(168, 85, 247, 0.2)",
+            "color": "rgb(168, 85, 247)",
+            "borderColor": "rgba(168, 85, 247, 0.3)",
+            "borderRadius": "9999px",
+            "padding": "2px 10px",
+            "fontSize": "12px"
+          }
+        },
+        {
+          "className": "badge badge-primary",
+          "text": "Email",
+          "styles": {
+            "backgroundColor": "rgba(0, 212, 255, 0.2)",
+            "color": "rgb(0, 212, 255)",
+            "borderColor": "rgba(0, 212, 255, 0.3)",
+            "borderRadius": "9999px",
+            "padding": "2px 10px",
+            "fontSize": "12px"
+          }
+        }
+      ]
+    },
+    "inputs": {
+      "count": 1,
+      "samples": [
+        {
+          "className": "input pl-10 w-64",
+          "type": "text",
+          "placeholder": "Search emails...",
+          "styles": {
+            "backgroundColor": "rgb(26, 26, 36)",
+            "color": "rgb(243, 244, 246)",
+            "borderColor": "rgb(42, 42, 58)",
+            "borderRadius": "8px",
+            "padding": "8px 16px 8px 40px",
+            "fontSize": "16px"
+          }
+        }
+      ]
+    },
+    "statusIndicators": {
+      "count": 17,
+      "samples": [
+        {
+          "className": "\n                status-connected\n                transition-all duration-300\n                opacity-100\n              ",
+          "styles": {
+            "backgroundColor": "rgb(34, 197, 94)",
+            "width": "12px",
+            "height": "12px",
+            "borderRadius": "9999px",
+            "boxShadow": "rgba(34, 197, 94, 0.796) 0px 0px 15.8911px 0px"
+          }
+        },
+        {
+          "className": "status-connected",
+          "styles": {
+            "backgroundColor": "rgb(34, 197, 94)",
+            "width": "12px",
+            "height": "12px",
+            "borderRadius": "9999px",
+            "boxShadow": "rgba(34, 197, 94, 0.8) 0px 0px 15.9957px 0px"
+          }
+        }
+      ]
+    },
+    "modals": {
+      "count": 0,
+      "samples": []
+    },
+    "glassElements": {
+      "count": 7,
+      "samples": [
+        {
+          "className": "\n          h-screen glass-strong border-r border-space-border flex flex-col\n          transition-all duration-300 ease-in-out\n          sticky top-0\n          translate-x-0\n          w-64\n        ",
+          "tagName": "aside",
+          "styles": {
+            "backgroundColor": "rgba(18, 18, 26, 0.6)",
+            "backdropFilter": "blur(16px)",
+            "borderColor": "rgb(42, 42, 58)"
+          }
+        },
+        {
+          "className": "text-center py-12 glass-strong rounded-lg border border-space-border",
+          "tagName": "div",
+          "styles": {
+            "backgroundColor": "rgba(18, 18, 26, 0.6)",
+            "backdropFilter": "blur(16px)",
+            "borderColor": "rgb(42, 42, 58)"
+          }
+        }
+      ]
+    },
+    "navigation": {
+      "hasSidebar": true,
+      "sidebarClasses": "\n          h-screen glass-strong border-r border-space-border flex flex-col\n          transition-all duration-300 ease-in-out\n          sticky top-0\n          translate-x-0\n          w-64\n        ",
+      "navLinkCount": 12,
+      "activeLink": {
+        "className": "\n                flex items-center gap-3 px-3 py-3 rounded-lg\n                transition-all duration-200 relative\n                bg-neon-blue/20 text-neon-blue border border-neon-blue/50\n                \n              ",
+        "styles": {
+          "backgroundColor": "rgba(0, 212, 255, 0.2)",
+          "color": "rgb(0, 212, 255)",
+          "borderColor": "rgba(0, 212, 255, 0.5)"
+        }
+      },
+      "inactiveLink": {
+        "className": "flex-1 cursor-pointer hover:opacity-80 transition-opacity",
+        "styles": {
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "color": "rgb(243, 244, 246)"
+        }
+      }
+    }
+  }
+}

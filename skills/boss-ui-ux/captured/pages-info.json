@@ -1,0 +1,270 @@
+{
+  "captured_at": "2025-12-16T11:55:54.246654",
+  "base_url": "http://localhost:5189",
+  "pages": [
+    {
+      "name": "dashboard",
+      "path": "/",
+      "description": "Dashboard - Main overview",
+      "title": "BOSS Communications Exchange",
+      "screenshot": "screenshots/dashboard.png",
+      "components": {
+        "cards": 9,
+        "buttons": {
+          "total": 7,
+          "primary": 3,
+          "secondary": 1,
+          "success": 0,
+          "danger": 0
+        },
+        "badges": 1,
+        "inputs": 0,
+        "modals": 0,
+        "statusIndicators": 7,
+        "glassElements": 1,
+        "tables": 0,
+        "links": 18
+      }
+    },
+    {
+      "name": "email",
+      "path": "/email",
+      "description": "Email - Inbox and message management",
+      "title": "BOSS Communications Exchange",
+      "screenshot": "screenshots/email.png",
+      "components": {
+        "cards": 0,
+        "buttons": {
+          "total": 21,
+          "primary": 0,
+          "secondary": 1,
+          "success": 0,
+          "danger": 0
+        },
+        "badges": 100,
+        "inputs": 1,
+        "modals": 0,
+        "statusIndicators": 1,
+        "glassElements": 1,
+        "tables": 0,
+        "links": 12
+      }
+    },
+    {
+      "name": "approvals",
+      "path": "/approvals",
+      "description": "Approvals - Pending approval queue",
+      "title": "BOSS Communications Exchange",
+      "screenshot": "screenshots/approvals.png",
+      "components": {
+        "cards": 8,
+        "buttons": {
+          "total": 13,
+          "primary": 0,
+          "secondary": 1,
+          "success": 0,
+          "danger": 0
+        },
+        "badges": 9,
+        "inputs": 0,
+        "modals": 0,
+        "statusIndicators": 1,
+        "glassElements": 1,
+        "tables": 0,
+        "links": 12
+      }
+    },
+    {
+      "name": "whatsapp",
+      "path": "/whatsapp",
+      "description": "WhatsApp - Chat interface",
+      "title": "BOSS Communications Exchange",
+      "screenshot": "screenshots/whatsapp.png",
+      "components": {
+        "cards": 0,
+        "buttons": {
+          "total": 4,
+          "primary": 0,
+          "secondary": 1,
+          "success": 0,
+          "danger": 0
+        },
+        "badges": 0,
+        "inputs": 1,
+        "modals": 0,
+        "statusIndicators": 1,
+        "glassElements": 1,
+        "tables": 0,
+        "links": 12
+      }
+    },
+    {
+      "name": "channels",
+      "path": "/channels",
+      "description": "Channels - Account management",
+      "title": "BOSS Communications Exchange",
+      "screenshot": "screenshots/channels.png",
+      "components": {
+        "cards": 10,
+        "buttons": {
+          "total": 20,
+          "primary": 1,
+          "secondary": 14,
+          "success": 1,
+          "danger": 0
+        },
+        "badges": 0,
+        "inputs": 0,
+        "modals": 0,
+        "statusIndicators": 1,
+        "glassElements": 1,
+        "tables": 0,
+        "links": 12
+      }
+    },
+    {
+      "name": "knowledge",
+      "path": "/knowledge",
+      "description": "Knowledge - Knowledge base",
+      "title": "BOSS Communications Exchange",
+      "screenshot": "screenshots/knowledge.png",
+      "components": {
+        "cards": 0,
+        "buttons": {
+          "total": 7,
+          "primary": 0,
+          "secondary": 0,
+          "success": 0,
+          "danger": 0
+        },
+        "badges": 0,
+        "inputs": 1,
+        "modals": 0,
+        "statusIndicators": 1,
+        "glassElements": 1,
+        "tables": 0,
+        "links": 12
+      }
+    },
+    {
+      "name": "team",
+      "path": "/team",
+      "description": "Team - Team management",
+      "title": "BOSS Communications Exchange",
+      "screenshot": "screenshots/team.png",
+      "components": {
+        "cards": 0,
+        "buttons": {
+          "total": 3,
+          "primary": 0,
+          "secondary": 0,
+          "success": 0,
+          "danger": 0
+        },
+        "badges": 0,
+        "inputs": 0,
+        "modals": 0,
+        "statusIndicators": 0,
+        "glassElements": 0,
+        "tables": 0,
+        "links": 0
+      }
+    },
+    {
+      "name": "threads",
+      "path": "/threads",
+      "description": "Threads - Conversation threads",
+      "title": "BOSS Communications Exchange",
+      "screenshot": "screenshots/threads.png",
+      "components": {
+        "cards": 0,
+        "buttons": {
+          "total": 3,
+          "primary": 0,
+          "secondary": 0,
+          "success": 0,
+          "danger": 0
+        },
+        "badges": 0,
+        "inputs": 0,
+        "modals": 0,
+        "statusIndicators": 1,
+        "glassElements": 1,
+        "tables": 0,
+        "links": 12
+      }
+    },
+    {
+      "name": "automation",
+      "path": "/automation",
+      "description": "Automation - Workflow rules",
+      "title": "BOSS Communications Exchange",
+      "screenshot": "screenshots/automation.png",
+      "components": {
+        "cards": 0,
+        "buttons": {
+          "total": 6,
+          "primary": 0,
+          "secondary": 0,
+          "success": 0,
+          "danger": 0
+        },
+        "badges": 0,
+        "inputs": 0,
+        "modals": 0,
+        "statusIndicators": 1,
+        "glassElements": 2,
+        "tables": 0,
+        "links": 12
+      }
+    },
+    {
+      "name": "templates",
+      "path": "/templates",
+      "description": "Templates - Message templates",
+      "title": "BOSS Communications Exchange",
+      "screenshot": "screenshots/templates.png",
+      "components": {
+        "cards": 0,
+        "buttons": {
+          "total": 5,
+          "primary": 0,
+          "secondary": 0,
+          "success": 0,
+          "danger": 0
+        },
+        "badges": 0,
+        "inputs": 0,
+        "modals": 0,
+        "statusIndicators": 1,
+        "glassElements": 2,
+        "tables": 0,
+        "links": 12
+      }
+    },
+    {
+      "name": "settings",
+      "path": "/settings",
+      "description": "Settings - Application settings",
+      "title": "BOSS Communications Exchange",
+      "screenshot": "screenshots/settings.png",
+      "components": {
+        "cards": 7,
+        "buttons": {
+          "total": 22,
+          "primary": 1,
+          "secondary": 1,
+          "success": 0,
+          "danger": 3
+        },
+        "badges": 0,
+        "inputs": 0,
+        "modals": 0,
+        "statusIndicators": 6,
+        "glassElements": 1,
+        "tables": 0,
+        "links": 12
+      }
+    }
+  ]
+}

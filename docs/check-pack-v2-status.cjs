@@ -1,7 +1,7 @@
 const { existsSync, readdirSync, statSync } = require('fs');
 const { join } = require('path');
 
-const skillsDir = 'C:/Users/HeinvanVuuren/.claude/skills';
+const skillsDir = join(__dirname, '..', 'skills');
 
 // Recursively check for code files in a directory
 function hasCodeFilesRecursive(dir) {
@@ -59,23 +59,15 @@ const results = [];
 skills.forEach(skill => {
   const skillPath = join(skillsDir, skill);
 
-  const checks = {
-    readme: existsSync(join(skillPath, 'README.md')),
-    install: existsSync(join(skillPath, 'INSTALL.md')),
-    verify: existsSync(join(skillPath, 'VERIFY.md')),
-    src: existsSync(join(skillPath, 'src')),
-    hasCode: false
-  };
+  const hasReadme = existsSync(join(skillPath, 'README.md'));
+  const hasInstall = existsSync(join(skillPath, 'INSTALL.md'));
+  const hasVerify = existsSync(join(skillPath, 'VERIFY.md'));
+  const hasSrcDir = existsSync(join(skillPath, 'src')) && statSync(join(skillPath, 'src')).isDirectory();
+  const hasCodeFiles = hasSrcDir && hasCodeFilesRecursive(join(skillPath, 'src'));
 
-  // Check for code files in src/ recursively
-  if (checks.src) {
-    const srcPath = join(skillPath, 'src');
-    checks.hasCode = hasCodeFilesRecursive(srcPath);
-  }
+  const allPassing = hasReadme && hasInstall && hasVerify && hasSrcDir && hasCodeFiles;
 
-  const passing = checks.readme && checks.install && checks.verify && checks.src && checks.hasCode;
-
-  if (passing) {
+  if (allPassing) {
     passCount++;
   } else {
     failCount++;
@@ -83,38 +75,42 @@ skills.forEach(skill => {
 
   results.push({
     skill,
-    passing,
-    checks
+    hasReadme,
+    hasInstall,
+    hasVerify,
+    hasSrcDir,
+    hasCodeFiles,
+    allPassing
   });
 });
 
-// Display summary table
-console.log('Skill                              | README | INSTALL | VERIFY | src/ | Code | Status');
-console.log('-----------------------------------|--------|---------|--------|------|------|--------');
+// Print results table
+console.log('Skill'.padEnd(35) + '| README | INSTALL | VERIFY | src/ | Code | Status');
+console.log('-'.repeat(35) + '|--------|---------|--------|------|------|--------');
 
-results.forEach(({ skill, passing, checks }) => {
-  const readme = checks.readme ? '✓' : '✗';
-  const install = checks.install ? '✓' : '✗';
-  const verify = checks.verify ? '✓' : '✗';
-  const src = checks.src ? '✓' : '✗';
-  const code = checks.hasCode ? '✓' : '✗';
-  const status = passing ? 'PASS' : 'FAIL';
+results.forEach(r => {
+  const readme = r.hasReadme ? '✓' : '✗';
+  const install = r.hasInstall ? '✓' : '✗';
+  const verify = r.hasVerify ? '✓' : '✗';
+  const src = r.hasSrcDir ? '✓' : '✗';
+  const code = r.hasCodeFiles ? '✓' : '✗';
+  const status = r.allPassing ? 'PASS' : 'FAIL';
 
   console.log(
-    `${skill.padEnd(35)}| ${readme.padEnd(7)}| ${install.padEnd(8)}| ${verify.padEnd(7)}| ${src.padEnd(5)}| ${code.padEnd(5)}| ${status}`
+    r.skill.padEnd(35) +
+    `| ${readme}      | ${install}       | ${verify}      | ${src}    | ${code}    | ${status}`
   );
 });
 
 console.log('\n=== Summary ===');
 console.log(`Total skills: ${skills.length}`);
-console.log(`Passing: ${passCount} (${Math.round(passCount/skills.length * 100)}%)`);
-console.log(`Failing: ${failCount} (${Math.round(failCount/skills.length * 100)}%)`);
+console.log(`Passing: ${passCount} (${Math.round(passCount / skills.length * 100)}%)`);
+console.log(`Failing: ${failCount} (${Math.round(failCount / skills.length * 100)}%)`);
 
-// Exit with error code if any failures
-if (failCount > 0) {
-  console.log('\n❌ Some skills are not Pack v2.0 compliant\n');
-  process.exit(1);
-} else {
-  console.log('\n✅ All skills are Pack v2.0 compliant!\n');
+if (failCount === 0) {
+  console.log('\n✅ All skills are Pack v2.0 compliant!');
   process.exit(0);
+} else {
+  console.log(`\n❌ ${failCount} skill(s) need attention`);
+  process.exit(1);
 }
