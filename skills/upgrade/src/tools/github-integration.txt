@@ -1,0 +1,3 @@
+    case "claude-code-github":
+      return await scrapeGitHubReleases(source);
+

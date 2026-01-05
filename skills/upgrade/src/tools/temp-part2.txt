@@ -1,0 +1,299 @@
+// ============================================================================
+// Analysis
+// ============================================================================
+
+async function analyzeImprovements(): Promise<Analysis> {
+  log("🔍 Analyzing scan results for improvement opportunities...");
+
+  // Load latest scan
+  const scanFiles = await Bun.file(SCANS_DIR).exists()
+    ? (await execAsync(`ls -t "${SCANS_DIR}"/*.json`)).stdout.trim().split("\n")
+    : [];
+
+  if (scanFiles.length === 0) {
+    throw new Error("No scan results found. Run --scan-only first.");
+  }
+
+  const latestScanPath = scanFiles[0];
+  verbose(`Loading scan: ${latestScanPath}`);
+
+  const scanContent = await readFile(latestScanPath, "utf-8");
+  const scanResult: ScanResult = JSON.parse(scanContent);
+
+  // Load PAI state snapshot
+  verbose("Building PAI state snapshot...");
+  const paiState = await buildPAIStateSnapshot();
+
+  // Analyze gaps
+  verbose("Identifying gaps...");
+  const gaps = await identifyGaps(scanResult.findings, paiState);
+
+  // Generate suggestions
+  verbose("Generating improvement suggestions...");
+  const suggestions = await generateSuggestions(gaps, scanResult.findings);
+
+  // Rank suggestions
+  verbose("Ranking by priority...");
+  const priorityRanking = rankSuggestions(suggestions);
+
+  const analysis: Analysis = {
+    analysis_id: generateId(),
+    analysis_date: getTimestamp(),
+    scan_id: scanResult.scan_id,
+    pai_state_snapshot: paiState,
+    gaps_identified: gaps,
+    suggestions,
+    priority_ranking: priorityRanking,
+    auto_approvable_count: suggestions.filter((s) => s.auto_approvable).length,
+    requires_review_count: suggestions.filter((s) => !s.auto_approvable).length,
+  };
+
+  // Save analysis
+  await ensureDir(ANALYSES_DIR);
+  const analysisPath = join(
+    ANALYSES_DIR,
+    `${formatTimestamp()}_analysis.json`
+  );
+  await writeFile(analysisPath, JSON.stringify(analysis, null, 2));
+
+  log(`✅ Analysis complete!`);
+  log(`   Suggestions: ${suggestions.length}`);
+  log(`   Auto-approvable: ${analysis.auto_approvable_count}`);
+  log(`   Requires review: ${analysis.requires_review_count}`);
+  log(`   Saved to: ${analysisPath}`);
+
+  return analysis;
+}
+
+async function buildPAIStateSnapshot(): Promise<any> {
+  // TODO: Implement actual PAI state snapshot
+  // Should read:
+  //   - skills/*/SKILL.md files
+  //   - settings.json hooks
+  //   - CONSTITUTION.md
+  //   - Available CLI tools
+
+  return {
+    skills_count: 36,
+    hooks_count: 60,
+    constitution_version: "2.0",
+    // ... more state data
+  };
+}
+
+async function identifyGaps(findings: Finding[], paiState: any): Promise<any[]> {
+  // TODO: Implement gap analysis logic
+  // Compare findings against current PAI state
+  // Return list of gaps (missing features, outdated patterns, etc.)
+
+  return [];
+}
+
+async function generateSuggestions(
+  gaps: any[],
+  findings: Finding[]
+): Promise<ImprovementSuggestion[]> {
+  // TODO: Implement suggestion generation
+  // For each gap, create an improvement suggestion
+
+  return [];
+}
+
+function rankSuggestions(
+  suggestions: ImprovementSuggestion[]
+): { suggestion_id: string; priority_score: number }[] {
+  return suggestions.map((s) => {
+    const impactScore = s.impact.score === "high" ? 3 : s.impact.score === "medium" ? 2 : 1;
+    const riskScore = s.risk.score === "high" ? 3 : s.risk.score === "medium" ? 2 : 1;
+    const effortScore = s.effort.score === "high" ? 3 : s.effort.score === "medium" ? 2 : 1;
+
+    // Priority = (Impact × 2) + (10 - Risk × 2) + (10 - Effort × 2)
+    const priorityScore =
+      impactScore * 2 + (10 - riskScore * 2) + (10 - effortScore * 2);
+
+    return {
+      suggestion_id: s.id,
+      priority_score: priorityScore,
+    };
+  });
+}
+
+// ============================================================================
+// Apply Upgrades
+// ============================================================================
+
+async function applyUpgrades(): Promise<void> {
+  log("🚀 Applying approved upgrades...");
+
+  // TODO: Implement upgrade application
+  // 1. Load approved analysis
+  // 2. Pre-upgrade validation
+  // 3. Create backup
+  // 4. Apply changes atomically
+  // 5. Post-upgrade verification
+  // 6. Generate report
+
+  log("⚠️  Upgrade application not yet implemented", "warn");
+  log("   This feature will apply improvements automatically");
+  log("   For now, review analysis results and apply manually");
+}
+
+// ============================================================================
+// Rollback
+// ============================================================================
+
+async function rollback(): Promise<void> {
+  log("🔄 Rolling back last upgrade...");
+
+  // TODO: Implement rollback logic
+  // 1. Find latest backup in deprecated/
+  // 2. Run rollback script
+  // 3. Verify rollback success
+
+  log("⚠️  Rollback not yet implemented", "warn");
+}
+
+// ============================================================================
+// History
+// ============================================================================
+
+async function showHistory(): Promise<void> {
+  log("📚 Upgrade History\n");
+
+  // TODO: Implement history display
+  // Show list of past upgrades with:
+  //   - Date
+  //   - Title
+  //   - Status (success/failed/rolled back)
+  //   - Files modified
+  //   - Impact
+
+  log("⚠️  History display not yet implemented", "warn");
+}
+
+// ============================================================================
+// Help
+// ============================================================================
+
+function showHelp(): void {
+  console.log(`
+PAI Upgrade CLI - Self-Improvement Engine
+
+Usage:
+  bun run upgrade-cli.ts [command] [options]
+
+Commands:
+  --full              Run full upgrade cycle (scan → analyze → apply)
+  --scan-only         Scan sources for new findings
+  --apply             Apply approved improvements
+  --rollback          Rollback last upgrade
+  --list-sources      List configured sources
+  --history           Show upgrade history
+  --help              Show this help message
+
+Options:
+  --source <id>       Scan specific source only
+  --dry-run           Show what would change without applying
+  --auto-approve      Skip manual approval (USE WITH CAUTION)
+  --verbose           Detailed logging
+
+Examples:
+  # Scan all sources
+  bun run upgrade-cli.ts --scan-only
+
+  # Scan specific source
+  bun run upgrade-cli.ts --scan-only --source anthropic-blog
+
+  # Run full upgrade with approval
+  bun run upgrade-cli.ts --full
+
+  # Apply improvements (after manual review)
+  bun run upgrade-cli.ts --apply
+
+  # List configured sources
+  bun run upgrade-cli.ts --list-sources
+  `);
+}
+
+// ============================================================================
+// Full Upgrade Cycle
+// ============================================================================
+
+async function fullUpgrade(): Promise<void> {
+  log("🔄 Running full upgrade cycle...\n");
+
+  try {
+    // 1. Scan sources
+    log("📡 Phase 1: Scanning sources");
+    const scanResult = await scanSources();
+
+    if (scanResult.total_findings === 0) {
+      log("✅ No new findings. PAI is up to date!");
+      return;
+    }
+
+    // 2. Analyze improvements
+    log("\n📊 Phase 2: Analyzing improvements");
+    const analysis = await analyzeImprovements();
+
+    if (analysis.suggestions.length === 0) {
+      log("✅ No improvement suggestions. PAI already implements all findings!");
+      return;
+    }
+
+    // 3. User approval (if not auto-approve)
+    if (!args["auto-approve"]) {
+      log("\n⏸️  Phase 3: User approval required");
+      log("   Review suggestions and run with --apply to proceed");
+      return;
+    }
+
+    // 4. Apply upgrades
+    log("\n⚡ Phase 4: Applying upgrades");
+    await applyUpgrades();
+
+    log("\n✅ Full upgrade cycle complete!");
+  } catch (error) {
+    log(`Upgrade cycle failed: ${error}`, "error");
+    process.exit(1);
+  }
+}
+
+// ============================================================================
+// Main
+// ============================================================================
+
+async function main(): Promise<void> {
+  try {
+    // Ensure required directories exist
+    await ensureDir(SCANS_DIR);
+    await ensureDir(ANALYSES_DIR);
+    await ensureDir(DEPRECATED_DIR);
+
+    if (args.help) {
+      showHelp();
+    } else if (args["list-sources"]) {
+      await listSources();
+    } else if (args["scan-only"]) {
+      await scanSources(args.source);
+    } else if (args.apply) {
+      await applyUpgrades();
+    } else if (args.rollback) {
+      await rollback();
+    } else if (args.history) {
+      await showHistory();
+    } else if (args.full) {
+      await fullUpgrade();
+    } else {
+      showHelp();
+    }
+  } catch (error) {
+    log(`Error: ${error}`, "error");
+    if (args.verbose && error instanceof Error) {
+      console.error(error.stack);
+    }
+    process.exit(1);
+  }
+}
+
+main();

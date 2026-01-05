@@ -1,0 +1,39 @@
+
+/**
+ * Scrape Daniel Miessler's PAI repository for commits
+ */
+async function scrapeDanielRepo(source: Source): Promise<Finding[]> {
+  try {
+    verbose(`  📚 Fetching commits using gh CLI...`);
+
+    // Extract repo from URL
+    const repoMatch = source.url.match(/github\.com\/([^\/]+\/[^\/]+)/);
+    if (!repoMatch) {
+      verbose(`  ❌ Could not extract repository from URL: ${source.url}`);
+      return [];
+    }
+    const repo = repoMatch[1]; // "danielmiessler/Personal_AI_Infrastructure"
+
+    // Use DanielRepoScraper to fetch and process commits
+    const findings = await DanielRepoScraper.scrape(repo, source.id, {
+      maxCommits: 20,
+      includeFiles: true
+    });
+
+    verbose(`  ✅ Found ${findings.length} commits from ${repo}`);
+    const highCount = findings.filter(f => f.relevance === "high").length;
+    const medCount = findings.filter(f => f.relevance === "medium").length;
+    const lowCount = findings.filter(f => f.relevance === "low").length;
+    verbose(`     High: ${highCount}, Medium: ${medCount}, Low: ${lowCount}`);
+
+    return findings;
+
+  } catch (error) {
+    verbose(`  ❌ Error scraping Daniel's repo: ${error}`);
+    if (error instanceof Error && error.message.includes("gh: not found")) {
+      verbose(`  💡 Hint: Install GitHub CLI (gh) - see https://cli.github.com/`);
+    }
+    return [];
+  }
+}
+

@@ -1,0 +1,3 @@
+    case "daniel-repo":
+      return await scrapeDanielRepo(source);
+

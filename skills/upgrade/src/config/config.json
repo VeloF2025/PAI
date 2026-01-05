@@ -1,0 +1,225 @@
+[
+  {
+    "id": "anthropic-blog",
+    "name": "Anthropic Engineering Blog",
+    "tier": 1,
+    "url": "https://www.anthropic.com/news",
+    "type": "web",
+    "scan_frequency": "daily",
+    "enabled": true,
+    "filters": {
+      "keywords": [
+        "Claude Code",
+        "prompting",
+        "agents",
+        "skills",
+        "MCP"
+      ],
+      "exclude_keywords": [
+        "general AI",
+        "marketing"
+      ]
+    },
+    "last_scanned": "2026-01-02T11:45:12.038Z"
+  },
+  {
+    "id": "claude-code-github",
+    "name": "Claude Code GitHub Releases",
+    "tier": 1,
+    "url": "https://github.com/anthropics/claude-code/releases",
+    "type": "api",
+    "scan_frequency": "daily",
+    "enabled": true,
+    "filters": {
+      "types": [
+        "release",
+        "pre-release"
+      ],
+      "max_releases": 5
+    },
+    "last_scanned": "2026-01-02T11:45:15.068Z"
+  },
+  {
+    "id": "anthropic-docs",
+    "name": "Anthropic Documentation",
+    "tier": 1,
+    "url": "https://docs.anthropic.com/",
+    "type": "web",
+    "scan_frequency": "daily",
+    "enabled": true,
+    "filters": {
+      "sections": [
+        "tool-use",
+        "prompt-engineering",
+        "best-practices"
+      ]
+    },
+    "last_scanned": "2026-01-02T11:45:16.423Z"
+  },
+  {
+    "id": "daniel-repo",
+    "name": "Daniel Miessler's PAI",
+    "tier": 2,
+    "url": "https://github.com/danielmiessler/Personal_AI_Infrastructure",
+    "type": "api",
+    "scan_frequency": "weekly",
+    "enabled": true,
+    "filters": {
+      "file_patterns": [
+        "skills/**/*.md",
+        "CONSTITUTION.md",
+        "Packs/**/*"
+      ],
+      "commit_limit": 50
+    },
+    "last_scanned": "2026-01-02T11:45:40.827Z"
+  },
+  {
+    "id": "indiedevdan-youtube",
+    "name": "IndieDevDan YouTube",
+    "tier": 3,
+    "url": "https://www.youtube.com/@indydevdan",
+    "type": "youtube",
+    "scan_frequency": "weekly",
+    "enabled": true,
+    "metadata": {
+      "channelId": "UC_x36zCEGilGpB1m-V4gmjg"
+    },
+    "filters": {
+      "keywords": [
+        "Claude Code",
+        "AI coding",
+        "automation"
+      ],
+      "max_videos": 10
+    },
+    "last_scanned": "2026-01-02T11:45:42.626Z"
+  },
+  {
+    "id": "ai-jason-youtube",
+    "name": "AI Jason YouTube",
+    "tier": 3,
+    "url": "https://www.youtube.com/@AIJason",
+    "type": "api",
+    "scan_frequency": "weekly",
+    "enabled": false,
+    "filters": {
+      "keywords": [
+        "AI agents",
+        "Claude",
+        "prompting"
+      ],
+      "max_videos": 10
+    }
+  },
+  {
+    "id": "simon-willison-blog",
+    "name": "Simon Willison's Blog",
+    "tier": 3,
+    "url": "https://simonwillison.net/",
+    "type": "rss",
+    "scan_frequency": "weekly",
+    "enabled": true,
+    "filters": {
+      "keywords": [
+        "Claude",
+        "AI",
+        "LLM"
+      ],
+      "max_posts": 10
+    },
+    "last_scanned": "2026-01-02T11:45:42.871Z"
+  },
+  {
+    "id": "langchain-blog",
+    "name": "LangChain Blog",
+    "tier": 3,
+    "url": "https://blog.langchain.dev/",
+    "type": "rss",
+    "scan_frequency": "weekly",
+    "enabled": true,
+    "filters": {
+      "keywords": [
+        "agents",
+        "tools",
+        "integration"
+      ],
+      "max_posts": 10
+    },
+    "last_scanned": "2026-01-02T11:45:43.531Z"
+  },
+  {
+    "id": "anthropic-cookbook",
+    "name": "Anthropic Cookbook",
+    "tier": 3,
+    "url": "https://github.com/anthropics/anthropic-cookbook",
+    "type": "api",
+    "scan_frequency": "weekly",
+    "enabled": true,
+    "filters": {
+      "file_patterns": [
+        "**/*.md",
+        "**/*.py"
+      ],
+      "commit_limit": 20
+    },
+    "last_scanned": "2026-01-02T11:46:17.869Z"
+  },
+  {
+    "id": "trailofbits-blog",
+    "name": "Trail of Bits Blog",
+    "tier": 4,
+    "url": "https://blog.trailofbits.com/",
+    "type": "rss",
+    "scan_frequency": "monthly",
+    "enabled": true,
+    "filters": {
+      "keywords": [
+        "AI security",
+        "testing",
+        "AIXCC",
+        "automation"
+      ],
+      "max_posts": 10
+    },
+    "last_scanned": "2026-01-02T11:46:20.220Z"
+  },
+  {
+    "id": "portswigger-research",
+    "name": "PortSwigger Research",
+    "tier": 4,
+    "url": "https://portswigger.net/research",
+    "type": "web",
+    "scan_frequency": "monthly",
+    "enabled": true,
+    "filters": {
+      "keywords": [
+        "web testing",
+        "automation",
+        "AI"
+      ],
+      "max_articles": 10
+    },
+    "last_scanned": "2026-01-02T11:46:20.847Z"
+  },
+  {
+    "id": "owasp-updates",
+    "name": "OWASP Updates",
+    "tier": 4,
+    "url": "https://owasp.org/",
+    "type": "web",
+    "scan_frequency": "monthly",
+    "enabled": false,
+    "filters": {
+      "keywords": [
+        "testing",
+        "tools",
+        "AI"
+      ],
+      "sections": [
+        "projects",
+        "tools"
+      ]
+    }
+  }
+]

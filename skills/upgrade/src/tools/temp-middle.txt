@@ -1,0 +1,91 @@
+
+async function scanSource(source: Source): Promise<Finding[]> {
+  verbose(`  Fetching from: ${source.url}`);
+
+  // Route to appropriate scraper based on source ID
+  switch (source.id) {
+    case "anthropic-blog":
+      return await scrapeAnthropicBlog(source);
+
+    // TODO: Implement other scrapers
+    case "claude-code-github":
+      verbose(`  ⚠️  GitHub scraper not yet implemented`);
+      return [];
+
+    case "anthropic-docs":
+      verbose(`  ⚠️  Docs scraper not yet implemented`);
+      return [];
+
+    case "daniel-repo":
+      verbose(`  ⚠️  Daniel's repo scraper not yet implemented`);
+      return [];
+
+    case "indiedevdan-youtube":
+      verbose(`  ⚠️  YouTube scraper not yet implemented`);
+      return [];
+
+    case "trailofbits-blog":
+      verbose(`  ⚠️  RSS scraper not yet implemented`);
+      return [];
+
+    default:
+      verbose(`  ⚠️  No scraper configured for: ${source.id}`);
+      return [];
+  }
+}
+
+/**
+ * Scrape Anthropic blog using WebFetch MCP tool
+ */
+async function scrapeAnthropicBlog(source: Source): Promise<Finding[]> {
+  try {
+    // Generate WebFetch prompt
+    const prompt = AnthropicBlogScraper.generatePrompt({ maxArticles: 10 });
+
+    // Call WebFetch via Claude Code CLI
+    const escapedPrompt = prompt.replace(/"/g, '\\"').replace(/\n/g, ' ');
+    const webfetchCmd = `claude-code --dangerously-skip-permissions mcp__webfetch "${source.url}" "${escapedPrompt}"`;
+
+    verbose(`  🌐 Calling WebFetch for ${source.url}...`);
+    const { stdout, stderr } = await execAsync(webfetchCmd);
+
+    if (stderr) {
+      verbose(`  ⚠️  WebFetch warnings: ${stderr}`);
+    }
+
+    // Parse WebFetch response
+    let articles;
+    try {
+      const response = JSON.parse(stdout);
+      articles = Array.isArray(response) ? response : response.articles || response.data || [];
+    } catch (parseError) {
+      verbose(`  ❌ Failed to parse WebFetch response as JSON`);
+      verbose(`  Raw output: ${stdout.substring(0, 200)}...`);
+      return [];
+    }
+
+    if (!Array.isArray(articles) || articles.length === 0) {
+      verbose(`  ⚠️  No articles found in WebFetch response`);
+      return [];
+    }
+
+    // Process results using scraper helper
+    const findings = AnthropicBlogScraper.processResults(articles, source.id);
+
+    verbose(`  ✅ Found ${findings.length} articles from Anthropic blog`);
+    const highCount = findings.filter(f => f.relevance === "high").length;
+    const medCount = findings.filter(f => f.relevance === "medium").length;
+    const lowCount = findings.filter(f => f.relevance === "low").length;
+    verbose(`     High: ${highCount}, Medium: ${medCount}, Low: ${lowCount}`);
+
+    return findings;
+
+  } catch (error) {
+    verbose(`  ❌ Error scraping Anthropic blog: ${error}`);
+    if (error instanceof Error && error.message.includes("command not found")) {
+      verbose(`  💡 Hint: Make sure claude-code CLI is in PATH`);
+    }
+    return [];
+  }
+}
+

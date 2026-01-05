@@ -1,0 +1,39 @@
+
+/**
+ * Scrape GitHub releases using gh CLI
+ */
+async function scrapeGitHubReleases(source: Source): Promise<Finding[]> {
+  try {
+    verbose(`  📦 Fetching releases using gh CLI...`);
+
+    // Extract repo from URL (e.g., "https://github.com/anthropics/claude-code/releases" -> "anthropics/claude-code")
+    const repoMatch = source.url.match(/github\.com\/([^\/]+\/[^\/]+)/);
+    if (!repoMatch) {
+      verbose(`  ❌ Could not extract repository from URL: ${source.url}`);
+      return [];
+    }
+    const repo = repoMatch[1];
+
+    // Use GitHubReleasesScraper to fetch and process releases
+    const findings = await GitHubReleasesScraper.scrape(repo, source.id, {
+      maxReleases: 10,
+      includePrerelease: false
+    });
+
+    verbose(`  ✅ Found ${findings.length} releases from ${repo}`);
+    const highCount = findings.filter(f => f.relevance === "high").length;
+    const medCount = findings.filter(f => f.relevance === "medium").length;
+    const lowCount = findings.filter(f => f.relevance === "low").length;
+    verbose(`     High: ${highCount}, Medium: ${medCount}, Low: ${lowCount}`);
+
+    return findings;
+
+  } catch (error) {
+    verbose(`  ❌ Error scraping GitHub releases: ${error}`);
+    if (error instanceof Error && error.message.includes("gh: not found")) {
+      verbose(`  💡 Hint: Install GitHub CLI (gh) - see https://cli.github.com/`);
+    }
+    return [];
+  }
+}
+
