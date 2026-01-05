@@ -97,13 +97,24 @@ vitest run tests/pack-v2.test.ts
    git clone https://github.com/Heinvv10/PAI.git .
    ```
 
-2. **Install a skill** (each has complete INSTALL.md):
+2. **Setup environment variables** (required for API access):
+   ```bash
+   # Copy the template
+   cp .env.example .env
+
+   # Edit .env and add your API keys
+   # Minimum required: ANTHROPIC_API_KEY, GITHUB_TOKEN
+   ```
+
+   See [SECURITY.md](SECURITY.md) for credential management best practices.
+
+3. **Install a skill** (each has complete INSTALL.md):
    ```bash
    cd skills/[skill-name]
    cat INSTALL.md  # Follow installation steps
    ```
 
-3. **Verify installation**:
+4. **Verify installation**:
    ```bash
    cd skills/[skill-name]
    cat VERIFY.md   # Complete verification checklist
@@ -115,6 +126,7 @@ vitest run tests/pack-v2.test.ts
 - Node.js 20+ (for validation scripts)
 - Bun runtime (for TypeScript CLI tools)
 - Git
+- API Keys (see `.env.example` for required credentials)
 
 ## Documentation
 
@@ -230,6 +242,40 @@ See [GitHub Actions Workflows](.github/workflows/README.md) for details.
 3. **User Feedback is Critical** - Feedback triggered the deep dive that discovered the misunderstanding
 4. **Code Quality Focus** - Pack v2.0 is about production-ready code organization, not just documentation
 5. **Workflow-Based Skills Still Need Code** - Minimal CLI wrappers satisfy Pack v2.0 requirements
+
+## Security
+
+### Credential Protection
+
+This repository uses comprehensive `.gitignore` patterns to prevent accidental commits of sensitive files:
+
+**Protected Files**:
+- API Keys: `.env`, `credentials.json`, `.credentials.json`, `*.key`, `*.pem`
+- SSH Keys: `id_rsa`, `id_ed25519`, private keys
+- Databases: `*.sqlite`, `*.db` (may contain sensitive data)
+- Logs: `*.log` (may contain debug information)
+
+**Setup**:
+```bash
+# 1. Copy environment template
+cp .env.example .env
+
+# 2. Edit with your credentials
+# Required: ANTHROPIC_API_KEY, GITHUB_TOKEN
+
+# 3. Verify .env is protected
+git status  # .env should NOT appear
+```
+
+**See [SECURITY.md](SECURITY.md) for**:
+- Complete sensitive files list
+- Credential management best practices
+- Incident response procedures
+- Security checklist
+
+### Reporting Security Issues
+
+For security vulnerabilities, see [SECURITY.md](SECURITY.md) for disclosure procedures.
 
 ## License
 
