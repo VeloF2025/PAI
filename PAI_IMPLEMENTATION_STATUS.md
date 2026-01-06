@@ -282,10 +282,10 @@ Vue 3 Dashboard (Real-time visualization)
 
 ## What We're Actually Missing
 
-### 1. ❌ ElevenLabs TTS Integration (LOW PRIORITY)
-- We have macOS `say` command
-- Works fine for notifications
-- ElevenLabs is a "nice to have" enhancement
+### 1. ~~ElevenLabs TTS Integration~~ - ❌ **SKIPPED** (User Decision)
+- We have macOS `say` command working
+- Current voice notifications are sufficient
+- Premium TTS not needed for this implementation
 
 ### 2. ⚠️ Pack Marketplace (MEDIUM PRIORITY)
 - No centralized pack discovery website
@@ -406,11 +406,11 @@ The kai-hook-system (event-bus.ts, shared.ts, security.ts, categorizer.ts) is **
    - ✅ What makes our implementation unique
 
 ### ⚠️ REMAINING GAPS
-1. **Implement ElevenLabs TTS** (4-6 hours) - OPTIONAL
-   - Only if user wants premium voice
-   - Current `say` command works fine
+1. ~~**Implement ElevenLabs TTS**~~ - ❌ **SKIPPED** (User decision)
+   - Current `say` command works fine for notifications
+   - Premium voice not needed
 
-2. **Create Pack Marketplace Website** (20-30 hours)
+2. **Create Pack Marketplace Website** (20-30 hours) - MEDIUM PRIORITY
    - Pack discovery UI
    - Ratings and reviews
    - Cross-pack integration examples
@@ -450,11 +450,9 @@ The kai-hook-system (event-bus.ts, shared.ts, security.ts, categorizer.ts) is **
 - ✅ kai-hook-system foundation (event bus, security, shared utilities)
 
 **We're missing**:
-- ❌ ElevenLabs TTS (low priority - current voice works)
+- ~~ElevenLabs TTS~~ - ❌ **SKIPPED** (user decision)
 - ❌ Pack marketplace website (medium priority)
-- ❌ Pack dependency management (medium priority)
 - ❌ Icon assets (low priority)
-- ❌ 15 Founding Principles doc (low priority)
 
 **Bottom Line**: Our PAI implementation is **NOT** 30% complete. It's **85% complete** and in several areas **exceeds Dan Miessler's PAI**.
 
