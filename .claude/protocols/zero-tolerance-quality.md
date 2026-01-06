@@ -65,11 +65,15 @@ catch (error: unknown) {
 ## Validation Command
 
 ```bash
-# Run enhanced validation
-node scripts/zero-tolerance-check.js
+# Run Zero Tolerance validation
+python "$PAI_DIR/scripts/validators/zero-tolerance-validator.py" .
 
-# Or fallback
-python "C:\Jarvis\UNIVERSAL_RULES_CHECKER.py" --path "." --pre-commit
+# Run DGTS validation
+python "$PAI_DIR/scripts/validators/dgts-validator.py" .
+
+# Run both (full PAI validation)
+python "$PAI_DIR/scripts/validators/zero-tolerance-validator.py" . && \
+python "$PAI_DIR/scripts/validators/dgts-validator.py" .
 ```
 
 ---

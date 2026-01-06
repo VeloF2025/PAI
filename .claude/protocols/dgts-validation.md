@@ -40,6 +40,25 @@ def process():
     pass                       # Empty implementations
 ```
 
+### Mock/Stub/Demo Patterns (See: no-mock-validator)
+```typescript
+// Comprehensive mock detection - see no-mock-validator for full list
+const mockData = {...}         # Mock variable names
+const demoData = {...}         # Demo data
+"test@test.com"                # Placeholder emails
+"John Doe"                     # Placeholder names
+"lorem ipsum"                  # Placeholder text
+import { faker } from '...'    # Faker in production code
+"/api/mock/"                   # Mock API endpoints
+```
+
+**For comprehensive mock/stub/demo detection**, use the dedicated validator:
+```bash
+bun ~/.claude/hooks/no-mock-validator.ts
+```
+
+**Protocol**: `~/.claude/protocols/no-mock-production.md`
+
 ---
 
 ## DGTS Validation Process
@@ -86,10 +105,13 @@ def process():
 
 ```bash
 # Run DGTS validation
-python "C:\Jarvis\AI Workspace\Archon\python\src\agents\validation\dgts_validator.py"
+python "$PAI_DIR/scripts/validators/dgts-validator.py" .
 
-# Check agent behavior
-python "C:\Jarvis\AI Workspace\Archon\python\src\agents\validation\agent_behavior_monitor.py"
+# Run with custom threshold
+python "$PAI_DIR/scripts/validators/dgts-validator.py" . --threshold 0.3
+
+# JSON output for CI/CD
+python "$PAI_DIR/scripts/validators/dgts-validator.py" . --json
 ```
 
 ---
