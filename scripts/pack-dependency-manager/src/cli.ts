@@ -60,9 +60,8 @@ async function main() {
     }
 
     case 'check': {
-      const packName = args[1];
-      const versionRange = args[2];
-      const version = args[3];
+      const versionRange = args[1];
+      const version = args[2];
 
       const satisfies = VersionResolver.satisfies(version, versionRange);
       console.log(`\n${version} ${satisfies ? '✅ satisfies' : '❌ does not satisfy'} ${versionRange}\n`);
