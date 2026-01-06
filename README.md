@@ -17,6 +17,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![Claude Code](https://img.shields.io/badge/Powered%20by-Claude%20Code-blue)](https://claude.ai/code)
 [![PAI Video](https://img.shields.io/badge/🎥_Watch-PAI_Video-6B46C1)](https://youtu.be/iKwRWwabkEc)
+![Platform Support](https://img.shields.io/badge/Platform-Linux%20%7C%20macOS%20%7C%20Windows-brightgreen)
 
 
 **[Features](#-key-features)** • **[Quick Start](#-quick-start)** • **[Global Activation](#-pai-global-activation--new-pc-setup)** • **[Documentation](#-documentation)** • **[Examples](#-examples)** • **[Community](#-community)**
@@ -541,11 +542,14 @@ PAI is part of the journey toward Human 3.0—where humans are augmented by AI t
 
 - **🔓 Open Framework**: No vendor lock-in, complete transparency, you own everything
 - **🌍 Universal**: Works for anyone, anywhere, in any profession or life situation
+- **💻 Cross-Platform**: Works natively on Linux, macOS, and Windows (95% platform-agnostic code)
 - **🤖 Platform Independent**: Core structure works with Claude, GPT, Gemini, or any AI platform
 - **🧠 Persistent Memory**: Your AI remembers every context, project, and conversation
 - **🎯 Task Agnostic**: From writing a blog to tracking medical data to running a business
 - **📁 Plain Text**: All configuration in human-readable files you can edit and understand
 - **🔌 Extensible**: Add your own commands, agents, and integrations
+
+> 📄 **[Cross-Platform Compatibility Report](./CROSS_PLATFORM_COMPATIBILITY.md)** - Full details on Linux/macOS/Windows support
 
 📖 **[Read the full technical deep-dive on PAI](https://danielmiessler.com/blog/personal-ai-infrastructure)**
 
