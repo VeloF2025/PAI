@@ -1,0 +1,424 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "env": {
+    "MCP_API_KEY": "REDACTED",
+    "DISABLE_INTERLEAVED_THINKING": "false",
+    "DA": "PAI",
+    "PAI_DIR": "C:/Users/HeinvanVuuren/.claude",
+    "DA_COLOR": "purple",
+    "PAI_META_PROMPT_ENABLED": "true",
+    "PAI_META_PROMPT_ARCHIVAL": "true",
+    "PAI_META_PROMPT_MIN_CLARITY": "6",
+    "PLAYWRIGHT_MCP_EXTENSION_TOKEN": "gh41b5Xt3G4oHWn-QI_ztvhsYPmNbtuPV7scQKVEPcA"
+  },
+  "permissions": {
+    "allow": [
+      "Bash",
+      "Bash(bun:*)",
+      "Read(*)",
+      "Write(*)",
+      "Edit(*)",
+      "MultiEdit(*)",
+      "Glob(*)",
+      "Grep(*)",
+      "LS(*)",
+      "WebFetch(domain:*)",
+      "WebSearch",
+      "NotebookRead(*)",
+      "NotebookEdit(*)",
+      "TodoWrite(*)",
+      "ExitPlanMode(*)",
+      "Task(*)",
+      "mcp__*",
+      "Read(C:/Users/HeinvanVuuren/.claude/**)",
+      "Read(~/.claude/**)",
+      "Read(${PAI_DIR}/**)"
+    ],
+    "deny": [
+      "Bash(diskutil partitionDisk)",
+      "Bash(diskutil eraseDisk)",
+      "Bash(diskutil eraseVolume)",
+      "Bash(diskutil reformat)",
+      "Bash(diskutil zeroDisk)",
+      "Bash(diskutil appleRAID)",
+      "Bash(diskutil randomDisk)",
+      "Bash(diskutil coreStorage)",
+      "Bash(diskutil cs)",
+      "Bash(diskutil disableJournal)",
+      "Bash(diskutil resetFusion)",
+      "Bash(diskutil disableOwnership)",
+      "Bash(diskutil apfs deleteContainer)",
+      "Bash(diskutil apfs eraseVolume)",
+      "Bash(diskutil apfs decryptVolume)",
+      "Bash(diskutil apfs changePassphrase)",
+      "Bash(diskutil apfs deleteVolume)",
+      "Bash(diskutil apfs deleteVolumeGroup)",
+      "Bash(diskutil apfs deleteSnapshot)",
+      "Bash(rm -rf /)",
+      "Bash(rm -rf /*)",
+      "Bash(rm -rf ~)",
+      "Bash(rm -rf $HOME)",
+      "Bash(rm -rf $PAI_HOME)",
+      "Bash(rm -rf $PAI_DIR)",
+      "Bash(sudo rm -rf /)",
+      "Bash(sudo rm -rf /*)",
+      "Bash(fork bomb)",
+      "Bash(dd if=/dev/zero of=/dev/sda)",
+      "Bash(mkfs.ext4 /dev/sda)",
+      "Bash( /dev/sda)",
+      "Bash(> /dev/sda)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [],
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/capture-all-events.ts --event-type PreToolUse"
+          },
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/prompt-injection-guard.ts"
+          }
+        ]
+      },
+      {
+        "matcher": "mcp__Ref__*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/ref-tools-integration.ts"
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/pre-file-write.ts"
+          }
+        ]
+      },
+      {
+        "matcher": "EnterPlanMode",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/plan-mode-model-switcher.ts enter"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash(git commit*)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/expert-self-improve.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/pre-commit.ts"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/capture-all-events.ts --event-type PostToolUse"
+          },
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/token-tracker.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/auto-prompt-archival.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/post-tool-use.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/tool-cache.ts"
+          }
+        ]
+      },
+      {
+        "matcher": "ExitPlanMode",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/plan-mode-model-switcher.ts exit"
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/auto-research-trigger.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/auto-skill-creator.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/post-file-edit.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/agent-updater.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/auto-update-project-knowledge.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/docker-agents.ts"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/capture-session-summary.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/capture-all-events.ts --event-type SessionEnd"
+          },
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/learn-and-update.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/session-tracker.ts stop"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/proactive-scanner.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/model-router.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/load-veritas-context.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/load-dynamic-requirements.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/update-tab-titles.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/auto-meta-prompt-clarification.ts"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/smart-context-loader.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/load-core-context.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/initialize-pai-session.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/session-tracker.ts start"
+          },
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/load-project-memory.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/mcp-auto-reconnect.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/mcp-health-check.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/capture-all-events.ts --event-type SessionStart"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/stop-hook.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/capture-all-events.ts --event-type Stop"
+          },
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/kai/categorizer.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/expert-self-improve.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/memory-maintenance-hook.ts"
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/subagent-stop-hook.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/capture-all-events.ts --event-type SubagentStop"
+          },
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/kai/categorizer.ts"
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/context-compression-hook.ts"
+          },
+          {
+            "type": "command",
+            "command": "bun.exe C:/Users/HeinvanVuuren/.claude/hooks/capture-all-events.ts --event-type PreCompact"
+          }
+        ]
+      }
+    ]
+  },
+  "alwaysThinkingEnabled": false,
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp@1.0.31"
+      ],
+      "env": {
+        "CLIENT_IP_ENCRYPTION_KEY": "pai-context7-key-2024"
+      }
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ]
+    },
+    "memory": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-memory"
+      ]
+    },
+    "claude-prompts": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@minipuft/claude-prompts-mcp"
+      ]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@latest",
+        "--browser",
+        "chrome",
+        "--viewport-size",
+        "1280x720",
+        "--console-level",
+        "error"
+      ]
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "chrome-devtools-mcp@latest"
+      ]
+    },
+    "github": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+      }
+    }
+  },
+  "feedbackSurveyState": {
+    "lastShownTime": 1754071370324
+  },
+  "statusline": {
+    "command": "bun.exe",
+    "args": [
+      "C:/Users/HeinvanVuuren/.claude/statusline.ts"
+    ]
+  },
+  "model": "claude-sonnet-4-5-20250929"
+}
