@@ -1,7 +1,23 @@
 # Playwright E2E/UI Testing Protocol
 
-**STATUS**: MANDATORY FOR UI PROJECTS
-**LOAD WHEN**: Working on UI, after feature builds, before deployments
+**STATUS**: ⚠️ DEPRECATED FOR VISUAL TESTING - Use Chrome Extension Instead
+**USE FOR**: CI/CD automated regression tests, headless testing only
+**VISUAL TESTING**: Use `chrome-extension-validation.md` protocol instead
+**LOAD WHEN**: Setting up CI/CD pipelines, automated regression suites
+
+---
+
+## ⚠️ IMPORTANT: Migration to Chrome Extension
+
+**For visual validation, debugging, and interactive testing:**
+- ✅ **USE**: `claude --chrome` with Chrome extension (see `chrome-extension-validation.md`)
+- ❌ **DON'T USE**: Playwright for manual visual testing
+
+**Playwright is now reserved for:**
+- ✅ CI/CD automated test suites
+- ✅ Headless regression testing
+- ✅ Cross-browser testing (Firefox, Safari, Edge)
+- ✅ GitHub Actions workflows
 
 ---
 

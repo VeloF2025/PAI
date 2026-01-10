@@ -30,10 +30,15 @@ Instead of loading ALL protocol details into every session, protocols are loaded
 **Purpose**: Force tests from documentation BEFORE implementation
 **Key Content**: TDD workflow, test requirements, coverage standards
 
-### playwright-testing.md
-**Load When**: Working on UI, after feature builds, before deployments
-**Purpose**: Ensure comprehensive E2E testing for UI changes
-**Key Content**: Test categories, execution flow, minimum coverage
+### chrome-extension-validation.md
+**Load When**: UI work, visual testing, debugging, deployments (PRIMARY METHOD)
+**Purpose**: Visual validation using Claude in Chrome extension
+**Key Content**: Validation workflows, browser commands, debugging techniques, migration guide
+
+### playwright-testing.md ⚠️ DEPRECATED
+**Load When**: CI/CD pipeline setup only (not for visual testing)
+**Purpose**: Automated regression testing in headless environments
+**Key Content**: Automated test suites, CI/CD configuration (use Chrome Extension for visual work)
 
 ### antihall-validator.md
 **Load When**: Suggesting code changes, referencing methods, working with codebase

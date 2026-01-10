@@ -410,6 +410,214 @@ This architecture scales from simple single-task workflows to complex multi-agen
 
 ---
 
+## 🔄 **PIV Loop Workflow (Prime → Plan → Execute → Review)**
+
+**Systematic feature development pattern for high-quality implementation with massive token savings.**
+
+PAI includes a complete implementation of Cole Medin's PIV Loop workflow - a structured 4-phase approach to feature development that saves ~73% tokens while maintaining exceptional quality through systematic planning and validation.
+
+### The Four Phases
+
+```
+🔍 PRIME → 📋 PLAN → ⚡ EXECUTE → ✅ REVIEW
+  ↓         ↓          ↓            ↓
+Load     Create    Implement    Analyze &
+Context   Plan    in Fresh     Calculate
+         & STOP    Context    Alignment
+```
+
+#### 1. 🔍 Prime - Load Comprehensive Context
+
+**Command:** `/prime`
+
+**Purpose:** Build complete understanding of the codebase before planning.
+
+**What it does:**
+- Analyzes project structure (directories, key files)
+- Reads core documentation (README, architecture docs)
+- Reviews recent commits and git history
+- Identifies patterns and conventions
+- Generates comprehensive priming report
+
+**Token Cost:** ~30,000 tokens (will be cleared before execution)
+
+#### 2. 📋 Plan - Strategic Planning with Context Reset
+
+**Command:** `/plan-and-pause "feature description"`
+
+**Purpose:** Create detailed implementation plan while context is fresh, then STOP.
+
+**What it does:**
+- Creates feature plan in `.agents/plans/[feature-name].md`
+- Documents context references (files to read, patterns to follow)
+- Breaks down into step-by-step tasks with validation commands
+- Includes acceptance criteria and completion checklist
+- **CRITICAL:** Stops after planning to trigger context reset
+
+**Token Cost:** Adds to prime context (~30k total) - then cleared
+
+**Why Stop?** This is where the magic happens. By stopping after planning, the next phase starts with a fresh context, saving ~22,000 tokens (73% reduction).
+
+#### 3. ⚡ Execute - Implementation in Fresh Context
+
+**Command:** `/execute-plan`
+
+**Purpose:** Implement the plan with fresh context, using the plan as your guide.
+
+**What it does:**
+- Starts with **fresh context** (only ~8k tokens)
+- Reads the plan file from `.agents/plans/`
+- Reads only the files specified in plan's "Context References"
+- Implements step-by-step tasks from the plan
+- Documents execution in `.agents/execution-reports/[feature-name]-report.md`
+- Tracks divergences from the plan (what changed and why)
+
+**Token Cost:** ~8,000 tokens (73% less than carrying forward full prime context!)
+
+**Key Insight:** The plan contains everything needed for execution. No need to carry forward the massive priming context.
+
+#### 4. ✅ Review - Analysis and Continuous Improvement
+
+**Command:** `/review`
+
+**Purpose:** Analyze execution quality and calculate alignment score.
+
+**What it does:**
+- Reads plan and execution report
+- Identifies all divergences (plan vs actual implementation)
+- Classifies divergences: Good ✅ (justified improvements) vs Bad ❌ (problematic)
+- Calculates alignment score (target: 9+/10)
+- Documents learnings for future planning
+- Creates system review in `.agents/system-reviews/[feature-name]-review.md`
+
+**Output:** Alignment score + improvement recommendations
+
+### Benefits
+
+**📊 Token Savings: 73% Reduction**
+- Traditional approach: Carry 30k context through implementation
+- PIV Loop approach: Clear to 8k after planning
+- Savings: ~22,000 tokens per feature
+
+**✅ Quality Through Structure**
+- Systematic planning prevents missing requirements
+- Fresh execution context reduces hallucinations
+- Review phase catches divergences and improves process
+- Alignment scoring validates planning accuracy
+
+**🎯 Learning System**
+- Divergence analysis identifies planning gaps
+- High alignment scores (9+/10) validate planning quality
+- Continuous improvement through review insights
+
+### Real-World Example: `/pack-status` Command
+
+The `/pack-status` command was implemented using the complete PIV Loop as validation:
+
+**Phase 1 - Prime:**
+- Loaded PAI project context (1361-line README, file structure, recent commits)
+- Generated comprehensive priming report
+- Token usage: ~30,000 tokens
+
+**Phase 2 - Plan:**
+- Created plan: `.agents/plans/add-pack-status-command.md`
+- Feature: Pack v2.0 validation system health monitoring
+- Confidence estimate: 9/10
+- Stopped for context reset ← **Critical step**
+
+**Phase 3 - Execute:**
+- Fresh context with plan only (~8k tokens vs 30k)
+- Created `~/.claude/commands/workflow/pack-status.md` (250 lines)
+- Implementation included: 4 workflow steps, error handling, cross-platform support
+- Documented in: `.agents/execution-reports/add-pack-status-command-report.md`
+
+**Phase 4 - Review:**
+- Analyzed 4 divergences (all Good ✅):
+  - Enhanced error handling (4 specific scenarios)
+  - Emoji headers (PAI style consistency)
+  - Cross-platform details (Windows/Linux/macOS)
+  - 10-point scoring system
+- **Alignment Score: 9.5/10**
+- Created: `.agents/system-reviews/add-pack-status-command-review.md`
+
+**Results:**
+- ✅ Feature fully implemented and tested
+- ✅ 73% token savings validated (30k → 8k)
+- ✅ 9.5/10 alignment score (exceptional quality)
+- ✅ Zero bad divergences
+- ✅ Complete audit trail in `.agents/` directory
+
+### When to Use PIV Loop
+
+**✅ Use PIV Loop for:**
+- Complex features requiring multiple files
+- Features where you need to understand existing patterns first
+- Features with unclear requirements (planning helps clarify)
+- Features where token costs are a concern
+- Learning new codebases (prime phase builds understanding)
+
+**⚠️ Skip PIV Loop for:**
+- Simple one-file changes
+- Quick bug fixes
+- Tasks with crystal-clear requirements
+- Exploratory work (use `/prime` alone)
+
+### Available Commands
+
+| Command | Purpose | Phase |
+|---------|---------|-------|
+| `/prime` | Load project context | 1. Prime |
+| `/plan-and-pause "description"` | Create plan & stop | 2. Plan |
+| `/execute-plan` | Implement in fresh context | 3. Execute |
+| `/review` | Analyze & score alignment | 4. Review |
+
+### Workflow Artifacts
+
+All PIV Loop work is documented in `.agents/` directory:
+
+```
+.agents/
+├── plans/
+│   └── [feature-name].md           # Phase 2 output
+├── execution-reports/
+│   └── [feature-name]-report.md    # Phase 3 output
+└── system-reviews/
+    └── [feature-name]-review.md    # Phase 4 output
+```
+
+These artifacts provide:
+- Complete audit trail of feature development
+- Learning data for improving planning process
+- Reference examples for future features
+- Quality metrics and alignment scores
+
+### Success Metrics
+
+**Target Alignment Score:** 9+/10
+- **9.0-10.0:** Exceptional - plan was accurate, divergences justified
+- **7.0-8.9:** Good - minor misalignments, mostly on track
+- **5.0-6.9:** Needs improvement - significant divergences
+- **<5.0:** Poor - plan didn't match execution
+
+**Token Savings Target:** 70%+ reduction in execution phase
+
+**Quality Gates:**
+- All acceptance criteria met ✅
+- Zero bad divergences ✅
+- Complete documentation ✅
+- Learnings documented for next iteration ✅
+
+### Learn More
+
+- **Implementation:** See `~/.claude/commands/workflow/` for PIV Loop commands
+- **Case Study:** Read `.agents/system-reviews/add-pack-status-command-review.md`
+- **Pattern Origin:** [Cole Medin's PIV Loop](https://www.youtube.com/watch?v=VIDEO_ID)
+- **Architecture:** See `docs/ARCHITECTURE.md` for how PIV Loop uses Skills/Workflows
+
+**The PIV Loop transforms feature development from ad-hoc implementation into a systematic, measurable, continuously improving process.**
+
+---
+
 ## 🎯 **What is PAI?**
 
 > **Core Mission:** Augment humans with AI capabilities so they can survive and thrive in a world full of AI.

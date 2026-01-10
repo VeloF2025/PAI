@@ -1,0 +1,71 @@
+{
+  "project_name": "Ralph Test Project",
+  "description": "Simple test project to validate Ralph autonomous coding loop",
+  "user_stories": [
+    {
+      "id": "story-001",
+      "title": "Create Hello World Utility",
+      "description": "Create a simple TypeScript utility function that returns 'Hello Ralph!' when called",
+      "acceptance_criteria": [
+        "Function exports hello() from src/utils/greeting.ts",
+        "Function returns string 'Hello Ralph!'",
+        "Function has proper TypeScript types",
+        "Function passes unit test"
+      ],
+      "priority": "high",
+      "estimated_complexity": 2,
+      "components_affected": ["utils"],
+      "status": "pending"
+    },
+    {
+      "id": "story-002",
+      "title": "Add User Greeting Component",
+      "description": "Create a React component that displays personalized greeting using the hello utility. Component should accept a name prop and display 'Hello [name]!' with proper styling.",
+      "acceptance_criteria": [
+        "Component created at src/components/UserGreeting.tsx",
+        "Component accepts 'name' prop (string)",
+        "Component uses hello() utility from story-001",
+        "Component has proper TypeScript types",
+        "Component has basic TailwindCSS styling",
+        "Component passes unit test"
+      ],
+      "priority": "high",
+      "estimated_complexity": 4,
+      "components_affected": ["ui", "utils"],
+      "status": "pending"
+    },
+    {
+      "id": "story-003",
+      "title": "Create Greeting API Endpoint",
+      "description": "Create Next.js API route that returns greeting data. Should accept GET request with name parameter and return JSON with greeting message.",
+      "acceptance_criteria": [
+        "API route created at src/app/api/greeting/route.ts",
+        "Accepts GET request with 'name' query parameter",
+        "Returns JSON: { message: string, timestamp: string }",
+        "Uses hello() utility from story-001",
+        "Proper error handling for missing name parameter",
+        "API endpoint passes integration test"
+      ],
+      "priority": "medium",
+      "estimated_complexity": 5,
+      "components_affected": ["api", "utils"],
+      "status": "pending"
+    }
+  ],
+  "technical_constraints": [
+    "Must use TypeScript with strict mode",
+    "Must follow existing code patterns",
+    "Must use TailwindCSS for styling",
+    "Must use Next.js 14+ with App Router",
+    "All code must pass TypeScript compilation",
+    "All code must pass ESLint validation"
+  ],
+  "quality_gates": [
+    "Zero TypeScript errors (npx tsc --noEmit)",
+    "Zero ESLint errors (npx eslint .)",
+    "No console.log statements in production code",
+    "All catch blocks properly handled",
+    "DGTS validation passing (no gaming patterns)",
+    "All tests passing"
+  ]
+}
